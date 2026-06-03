@@ -302,6 +302,28 @@
         color: var(--bion-color-ink);
         word-break: break-word;
       }
+      .tok .frame {
+        width: 96px;
+        height: 64px;
+        border-radius: 8px;
+        border: 1px solid var(--bion-color-line);
+        background: var(--bion-color-paper);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        color: var(--bion-color-ink);
+      }
+      .tok .frame .bar {
+        height: 14px;
+        background: var(--bion-color-ink);
+        border-radius: 2px;
+      }
+      .tok .frame .solid {
+        width: 60px;
+        height: 44px;
+        background: var(--bion-color-ink);
+      }
 
       /* controls bar */
       .controls {
@@ -2096,42 +2118,68 @@ import { Button } from &apos;@bion-mfe-ui/vue&apos;;
         }
         return out;
       }
-      /* prefixes tested in order — more specific ones first */
+      /* prefixes tested in order — more specific ones first.
+         `kind` decides how the sample actually demonstrates the token. */
       const TOKEN_GROUPS = [
-        ["Color", "color-", true],
-        ["Radius", "radius-"],
-        ["Space", "space-"],
-        ["Font size", "font-size-"],
-        ["Font weight", "font-weight-"],
-        ["Font family", "font-"],
-        ["Line height", "line-height-"],
-        ["Letter spacing", "letter-spacing-"],
-        ["Motion", "motion-"],
-        ["Z-index", "z-index-"],
+        ["Color", "color-", "color"],
+        ["Radius", "radius-", "radius"],
+        ["Space", "space-", "space"],
+        ["Font size", "font-size-", "fontSize"],
+        ["Font weight", "font-weight-", "fontWeight"],
+        ["Font family", "font-", "fontFamily"],
+        ["Line height", "line-height-", "lineHeight"],
+        ["Letter spacing", "letter-spacing-", "letterSpacing"],
+        ["Motion", "motion-", "text"],
+        ["Z-index", "z-index-", "text"],
       ];
       function classifyToken(name) {
         const k = name.replace("--bion-", "");
-        for (const [title, prefix, isColor] of TOKEN_GROUPS) {
+        for (const [title, prefix, kind] of TOKEN_GROUPS) {
           if (k.startsWith(prefix))
-            return { title, leaf: k.slice(prefix.length), isColor: !!isColor };
+            return { title, leaf: k.slice(prefix.length), kind };
         }
-        return { title: "Other", leaf: k, isColor: false };
+        return { title: "Other", leaf: k, kind: "text" };
+      }
+      /* each sample genuinely applies its own token value */
+      function sampleHTML(kind, value) {
+        const disp = "font-family:var(--bion-font-display)";
+        switch (kind) {
+          case "color":
+            return `<div class="chip" style="background:${value}"></div>`;
+          case "radius":
+            return `<div class="frame"><div class="solid" style="border-radius:${value}"></div></div>`;
+          case "space":
+            return `<div class="frame"><div class="bar" style="width:${value}"></div></div>`;
+          case "fontSize":
+            return `<div class="frame"><span style="font-size:${value};line-height:1;${disp}">Ag</span></div>`;
+          case "fontWeight":
+            return `<div class="frame"><span style="font-weight:${value};font-size:26px;${disp}">Ag</span></div>`;
+          case "fontFamily":
+            return `<div class="frame"><span style="font-family:${value};font-size:22px">Ag</span></div>`;
+          case "lineHeight":
+            return `<div class="frame"><span style="display:block;font-size:8px;text-align:center;line-height:${value}">Ag Ag<br>Ag Ag<br>Ag Ag</span></div>`;
+          case "letterSpacing":
+            return `<div class="frame"><span style="letter-spacing:${value};font-size:13px;${disp}">BION</span></div>`;
+          default:
+            return `<div class="chip meta">${value}</div>`;
+        }
       }
       const tokens = readRootTokens();
       const grouped = new Map(TOKEN_GROUPS.map(([t]) => [t, []]));
       for (const [name, value] of tokens) {
-        const { title, leaf, isColor } = classifyToken(name);
+        const { title, leaf, kind } = classifyToken(name);
         if (!grouped.has(title)) grouped.set(title, []);
-        grouped.get(title).push({ leaf, value, isColor });
+        grouped.get(title).push({ leaf, value, kind });
       }
       document.getElementById("swatches").innerHTML = [...grouped]
         .filter(([, items]) => items.length)
         .map(([title, items]) => {
           const toks = items
-            .map(({ leaf, value, isColor }) =>
-              isColor
-                ? `<div class="tok"><div class="chip" style="background:${value}"></div><div class="name">${leaf}</div><div class="val">${value}</div></div>`
-                : `<div class="tok"><div class="chip meta">${value}</div><div class="name">${leaf}</div></div>`,
+            .map(
+              ({ leaf, value, kind }) =>
+                `<div class="tok">${sampleHTML(kind, value)}<div class="name">${leaf}</div>${
+                  kind === "text" ? "" : `<div class="val">${value}</div>`
+                }</div>`,
             )
             .join("");
           return `<div class="tok-group">${title}</div><div class="swatch-row">${toks}</div>`;
