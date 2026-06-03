@@ -52,6 +52,58 @@ Every component is available three ways: the Web Component directly
 (`@bion-mfe-ui/core/<name>`), the React wrapper (`@bion-mfe-ui/react`), and the
 Vue wrapper (`@bion-mfe-ui/vue`). Same props, same events, one implementation.
 
+## Installation
+
+All packages are ESM-only and published under the `@bion-mfe-ui` scope. Install
+the one that matches your setup — framework adapters pull `core`, `tokens`, and
+`icons` in automatically.
+
+| Setup                                           | Install                           |
+| ----------------------------------------------- | --------------------------------- |
+| **React**                                       | `npm install @bion-mfe-ui/react`  |
+| **Vue**                                         | `npm install @bion-mfe-ui/vue`    |
+| **Plain HTML / any framework** (Web Components) | `npm install @bion-mfe-ui/core`   |
+| **CSS only** (no JS framework)                  | `npm install @bion-mfe-ui/css`    |
+| **Design tokens only**                          | `npm install @bion-mfe-ui/tokens` |
+
+```bash
+# pnpm
+pnpm add @bion-mfe-ui/react
+# yarn
+yarn add @bion-mfe-ui/react
+```
+
+**Peer dependencies** (you provide these):
+
+- `@bion-mfe-ui/react` → `react` and `react-dom` `>=18`
+- `@bion-mfe-ui/vue` → `vue` `>=3.4`
+
+### Load tokens once (required)
+
+Components read CSS variables from `tokens`, including inside their shadow DOM,
+so import the stylesheet once at your app root:
+
+```css
+@import "@bion-mfe-ui/css/index.css"; /* tokens + reset + component classes */
+/* or only the variables: */
+@import "@bion-mfe-ui/tokens/css";
+```
+
+### Via CDN (no install)
+
+For quick prototyping, load straight from a CDN — `esm.sh` resolves `lit` for you:
+
+```html
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@bion-mfe-ui/css/dist/index.css"
+/>
+<script type="module">
+  import "https://esm.sh/@bion-mfe-ui/core/product-card";
+</script>
+<bion-product-card name="Auro Headset" price="Rp 349.000"></bion-product-card>
+```
+
 ## Usage
 
 The host page loads tokens once (so CSS vars exist for every remote and inside
