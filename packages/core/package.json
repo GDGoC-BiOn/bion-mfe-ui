@@ -1,6 +1,6 @@
 {
   "name": "@bion-mfe-ui/core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Framework-agnostic UI components for Bion MFE as Web Components (Lit). Works in React, Vue, Svelte, or plain HTML.",
   "type": "module",
   "main": "./dist/index.js",

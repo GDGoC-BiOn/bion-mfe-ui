@@ -3,6 +3,7 @@ import {
   customElement,
   property,
   state,
+  query,
   queryAssignedElements,
 } from "lit/decorators.js";
 import { unsafeSVG } from "lit/directives/unsafe-svg.js";
@@ -34,6 +35,7 @@ export class BionCarousel extends LitElement {
   private timer?: ReturnType<typeof setInterval>;
 
   @queryAssignedElements() private slides!: HTMLElement[];
+  @query(".track") private track?: HTMLElement;
 
   static styles = [
     hostTokens,
@@ -156,10 +158,13 @@ export class BionCarousel extends LitElement {
     const n = this.slides.length;
     if (!n) return;
     this.index = (i + n) % n;
-    this.slides[this.index]?.scrollIntoView({
+    // Scroll only the internal track horizontally. `slide.scrollIntoView()`
+    // also scrolls every ancestor scroll container (i.e. the page), which yanks
+    // the viewport back up to the banner whenever the user has scrolled down and
+    // the auto-rotate advances. Scrolling the track itself never moves the page.
+    this.track?.scrollTo({
+      left: this.index * this.track.clientWidth,
       behavior: "smooth",
-      inline: "start",
-      block: "nearest",
     });
     this.start();
   }
