@@ -1,0 +1,14 @@
+/* @bion-mfe-ui/css — reset (optional)
+ * Minimal, opt-in. Remotes can include this or supply their own reset.
+ */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+body {
+  font-family: var(--bion-font-body);
+  font-size: var(--bion-font-size-base);
+  line-height: var(--bion-line-height-normal);
+  color: var(--bion-color-ink);
+  background: var(--bion-color-bg);
+  -webkit-font-smoothing: antialiased;
+}
+button { font-family: inherit; }

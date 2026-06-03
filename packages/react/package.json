@@ -1,0 +1,37 @@
+{
+  "name": "@bion-mfe-ui/react",
+  "version": "0.1.0",
+  "description": "Thin React wrappers over @bion-mfe-ui/core Web Components. Bridges props and custom events.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "dependencies": {
+    "@bion-mfe-ui/core": "workspace:^"
+  },
+  "scripts": {
+    "build": "tsup src/index.tsx --format esm --dts --external react"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "react": "^18.3.0",
+    "typescript": "^5.5.0",
+    "tsup": "^8.2.0"
+  }
+}

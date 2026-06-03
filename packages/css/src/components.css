@@ -1,0 +1,138 @@
+/* @bion-mfe-ui/css — components
+ * Class-based styling on top of @bion-mfe-ui/tokens CSS variables.
+ * Every value references a --bion-* token; no hardcoded colors.
+ * These classes are also what the Web Components in /core render internally.
+ */
+
+/* ── Button ── */
+.bion-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bion-space-2);
+  font-family: var(--bion-font-body);
+  font-size: var(--bion-font-size-sm);
+  font-weight: var(--bion-font-weight-regular);
+  line-height: 1;
+  border-radius: var(--bion-radius-pill);
+  cursor: pointer;
+  transition: var(--bion-motion-base) var(--bion-motion-ease);
+  border: 1px solid transparent;
+}
+.bion-btn--solid {
+  background: var(--bion-color-ink);
+  color: var(--bion-color-on-ink);
+  padding: 13px 24px;
+}
+.bion-btn--solid:hover { gap: var(--bion-space-3); }
+.bion-btn--outline {
+  background: none;
+  color: var(--bion-color-ink);
+  border-color: var(--bion-color-line2);
+  padding: 9px 16px;
+}
+.bion-btn--outline:hover { border-color: var(--bion-color-ink); }
+.bion-btn--icon {
+  width: 40px; height: 40px; padding: 0;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--bion-color-ink);
+  color: var(--bion-color-on-ink);
+}
+.bion-btn--icon:active { transform: scale(.92); }
+
+/* ── Chip (filter) ── */
+.bion-chip {
+  background: none; border: none; padding: 0;
+  color: var(--bion-color-mute);
+  cursor: pointer;
+  font-size: var(--bion-font-size-sm);
+  position: relative;
+  transition: var(--bion-motion-fast);
+}
+.bion-chip:hover { color: var(--bion-color-ink); }
+.bion-chip[aria-pressed="true"] {
+  color: var(--bion-color-ink);
+  font-weight: var(--bion-font-weight-medium);
+}
+.bion-chip[aria-pressed="true"]::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -6px;
+  height: 1px; background: var(--bion-color-ink);
+}
+
+/* ── Card / Product card ── */
+.bion-product-card { display: flex; flex-direction: column; cursor: pointer; }
+.bion-product-card__thumb {
+  aspect-ratio: 1;
+  background: var(--bion-color-tile);
+  border: 1px solid var(--bion-color-line);
+  border-radius: var(--bion-radius-lg);
+  display: grid; place-items: center;
+  position: relative; overflow: hidden;
+  transition: var(--bion-motion-base) var(--bion-motion-ease);
+}
+.bion-product-card:hover .bion-product-card__thumb { border-color: var(--bion-color-line2); }
+.bion-product-card__glyph { width: 40%; height: 40%; color: var(--bion-color-ink); transition: transform var(--bion-motion-slow) var(--bion-motion-ease); }
+.bion-product-card:hover .bion-product-card__glyph { transform: scale(1.06); }
+.bion-product-card__tag {
+  position: absolute; top: 13px; left: 13px;
+  font-size: var(--bion-font-size-2xs); font-weight: var(--bion-font-weight-medium);
+  letter-spacing: var(--bion-letter-spacing-wide); text-transform: uppercase;
+  color: var(--bion-color-ink); background: rgba(255,255,255,0.85);
+  padding: 4px 9px; border-radius: var(--bion-radius-pill);
+}
+.bion-product-card__fav {
+  position: absolute; top: 11px; right: 11px;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: none; border: none; cursor: pointer;
+  display: grid; place-items: center;
+  opacity: 0; transition: var(--bion-motion-base) var(--bion-motion-ease);
+  color: var(--bion-color-ink2);
+}
+.bion-product-card:hover .bion-product-card__fav { opacity: 1; }
+.bion-product-card__fav[aria-pressed="true"] { opacity: 1; color: var(--bion-color-ink); }
+.bion-product-card__add {
+  position: absolute; right: 13px; bottom: 13px;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--bion-color-ink); color: var(--bion-color-on-ink);
+  border: none; cursor: pointer; display: grid; place-items: center;
+  opacity: 0; transform: translateY(8px) scale(.9);
+  transition: var(--bion-motion-base) var(--bion-motion-ease);
+}
+.bion-product-card:hover .bion-product-card__add { opacity: 1; transform: translateY(0) scale(1); }
+.bion-product-card__add:hover svg { transform: rotate(90deg); }
+.bion-product-card__body { padding: 15px 2px 0; display: flex; flex-direction: column; }
+.bion-product-card__brand {
+  font-size: var(--bion-font-size-2xs); color: var(--bion-color-mute);
+  letter-spacing: var(--bion-letter-spacing-wide); text-transform: uppercase; margin-bottom: 5px;
+}
+.bion-product-card__name {
+  font-family: var(--bion-font-display); font-weight: var(--bion-font-weight-medium);
+  font-size: var(--bion-font-size-md); line-height: var(--bion-line-height-snug); margin-bottom: 10px;
+}
+.bion-product-card__price {
+  font-family: var(--bion-font-display); font-weight: var(--bion-font-weight-medium);
+  font-size: var(--bion-font-size-md); font-variant-numeric: tabular-nums;
+}
+.bion-product-card__price s { color: var(--bion-color-mute); font-weight: var(--bion-font-weight-regular); font-size: var(--bion-font-size-xs); margin-left: 2px; }
+
+/* ── Rating ── */
+.bion-rating { display: flex; align-items: center; gap: var(--bion-space-1); }
+.bion-rating__stars { display: flex; gap: 1.5px; }
+.bion-rating__stars svg { width: 11px; height: 11px; color: var(--bion-color-ink); fill: var(--bion-color-ink); }
+.bion-rating__stars svg.is-empty { color: var(--bion-color-line2); fill: var(--bion-color-line2); }
+.bion-rating__count { font-size: var(--bion-font-size-2xs); color: var(--bion-color-mute); }
+
+/* ── Quantity stepper ── */
+.bion-qty { display: flex; align-items: center; border: 1px solid var(--bion-color-line2); border-radius: var(--bion-radius-pill); }
+.bion-qty button { width: 28px; height: 28px; border-radius: 50%; border: none; background: none; cursor: pointer; color: var(--bion-color-ink); font-size: 15px; display: grid; place-items: center; transition: var(--bion-motion-fast); }
+.bion-qty button:hover { background: var(--bion-color-tile); }
+.bion-qty span { min-width: 26px; text-align: center; font-size: var(--bion-font-size-sm); font-variant-numeric: tabular-nums; }
+
+/* ── Cart drawer ── */
+.bion-scrim { position: fixed; inset: 0; background: transparent; z-index: var(--bion-z-index-scrim); pointer-events: none; transition: background var(--bion-motion-slow) var(--bion-motion-ease); }
+.bion-scrim.is-open { background: var(--bion-color-scrim); pointer-events: auto; }
+.bion-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: 418px; max-width: 92vw; z-index: var(--bion-z-index-drawer); background: var(--bion-color-bg); transform: translateX(100%); transition: transform var(--bion-motion-slow) var(--bion-motion-ease); display: flex; flex-direction: column; border-left: 1px solid var(--bion-color-line); }
+.bion-drawer.is-open { transform: translateX(0); }
+.bion-drawer__head { display: flex; align-items: center; justify-content: space-between; padding: 26px 28px 22px; border-bottom: 1px solid var(--bion-color-line); }
+.bion-drawer__items { flex: 1; overflow-y: auto; padding: 0 28px; }
+.bion-drawer__foot { padding: 24px 28px 28px; border-top: 1px solid var(--bion-color-line); }

@@ -1,0 +1,72 @@
+{
+  "name": "@bion-mfe-ui/core",
+  "version": "0.1.0",
+  "description": "Framework-agnostic UI components for Bion MFE as Web Components (Lit). Works in React, Vue, Svelte, or plain HTML.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./icon": {
+      "types": "./dist/components/icon.d.ts",
+      "import": "./dist/components/icon.js"
+    },
+    "./button": {
+      "types": "./dist/components/button.d.ts",
+      "import": "./dist/components/button.js"
+    },
+    "./chip": {
+      "types": "./dist/components/chip.d.ts",
+      "import": "./dist/components/chip.js"
+    },
+    "./rating": {
+      "types": "./dist/components/rating.d.ts",
+      "import": "./dist/components/rating.js"
+    },
+    "./product-card": {
+      "types": "./dist/components/product-card.d.ts",
+      "import": "./dist/components/product-card.js"
+    },
+    "./carousel": {
+      "types": "./dist/components/carousel.d.ts",
+      "import": "./dist/components/carousel.js"
+    },
+    "./quantity-stepper": {
+      "types": "./dist/components/quantity-stepper.d.ts",
+      "import": "./dist/components/quantity-stepper.js"
+    },
+    "./cart-drawer": {
+      "types": "./dist/components/cart-drawer.d.ts",
+      "import": "./dist/components/cart-drawer.js"
+    },
+    "./account-badge": {
+      "types": "./dist/components/account-badge.d.ts",
+      "import": "./dist/components/account-badge.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.js"
+  ],
+  "dependencies": {
+    "lit": "^3.2.0",
+    "@bion-mfe-ui/tokens": "workspace:^",
+    "@bion-mfe-ui/icons": "workspace:^"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts src/components/*.ts --format esm --dts --splitting"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "tsup": "^8.2.0"
+  }
+}

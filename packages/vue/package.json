@@ -1,0 +1,35 @@
+{
+  "name": "@bion-mfe-ui/vue",
+  "version": "0.1.0",
+  "description": "Thin Vue wrappers over @bion-mfe-ui/core Web Components.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "vue": ">=3.4"
+  },
+  "dependencies": {
+    "@bion-mfe-ui/core": "workspace:^"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --external vue"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "vue": "^3.4.0",
+    "typescript": "^5.5.0",
+    "tsup": "^8.2.0"
+  }
+}

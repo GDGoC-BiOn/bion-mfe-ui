@@ -1,0 +1,2367 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@bion-mfe-ui — components</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Inter:wght@400;450;500&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ── tokens (from @bion-mfe-ui/tokens) ── */
+      :root {
+        --bion-color-bg: #ffffff;
+        --bion-color-paper: #fafafa;
+        --bion-color-tile: #f4f4f4;
+        --bion-color-line: #ebebeb;
+        --bion-color-line2: #dcdcdc;
+        --bion-color-ink: #191919;
+        --bion-color-ink2: #4d4d4d;
+        --bion-color-mute: #8d8d8d;
+        --bion-color-on-ink: #ffffff;
+        --bion-color-scrim: rgba(25, 25, 25, 0.16);
+        --bion-radius-sm: 6px;
+        --bion-radius-md: 6px;
+        --bion-radius-lg: 10px;
+        --bion-radius-pill: 99px;
+        --bion-space-1: 4px;
+        --bion-space-2: 8px;
+        --bion-space-3: 12px;
+        --bion-space-4: 16px;
+        --bion-space-5: 20px;
+        --bion-space-6: 24px;
+        --bion-space-8: 32px;
+        --bion-font-display: "Inter Tight", sans-serif;
+        --bion-font-body: "Inter", sans-serif;
+        --bion-font-size-2xs: 11px;
+        --bion-font-size-xs: 12px;
+        --bion-font-size-sm: 13px;
+        --bion-font-size-base: 14px;
+        --bion-font-size-md: 15px;
+        --bion-font-size-lg: 18px;
+        --bion-font-size-xl: 24px;
+        --bion-font-size-2xl: 28px;
+        --bion-font-size-hero: 52px;
+        --bion-font-weight-regular: 400;
+        --bion-font-weight-medium: 500;
+        --bion-line-height-tight: 1.02;
+        --bion-line-height-snug: 1.3;
+        --bion-line-height-normal: 1.55;
+        --bion-line-height-relaxed: 1.65;
+        --bion-letter-spacing-tight: -0.02em;
+        --bion-letter-spacing-wide: 0.06em;
+        --bion-letter-spacing-wider: 0.1em;
+        --bion-letter-spacing-widest: 0.14em;
+        --bion-motion-ease: cubic-bezier(0.4, 0, 0.1, 1);
+        --bion-motion-fast: 0.2s;
+        --bion-motion-base: 0.28s;
+        --bion-motion-slow: 0.5s;
+        --bion-z-index-header: 50;
+        --bion-z-index-scrim: 90;
+        --bion-z-index-drawer: 100;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-font-smoothing: antialiased;
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: var(--bion-font-body);
+        font-size: 14px;
+        line-height: 1.55;
+        color: var(--bion-color-ink);
+        background: var(--bion-color-bg);
+      }
+      ::selection {
+        background: var(--bion-color-ink);
+        color: #fff;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: var(--bion-font-display);
+        font-weight: 500;
+        letter-spacing: -0.02em;
+      }
+      code,
+      .mono {
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      /* ── layout: sidebar + content ── */
+      .shell {
+        display: grid;
+        grid-template-columns: 248px 1fr;
+        min-height: 100vh;
+      }
+      aside {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        border-right: 1px solid var(--bion-color-line);
+        padding: 32px 24px;
+        overflow-y: auto;
+      }
+      .brand {
+        font-family: var(--bion-font-display);
+        font-weight: 600;
+        font-size: 17px;
+        letter-spacing: -0.03em;
+        margin-bottom: 4px;
+      }
+      .brand .v {
+        color: var(--bion-color-mute);
+        font-family: "JetBrains Mono";
+        font-size: 11px;
+        font-weight: 400;
+        margin-left: 6px;
+      }
+      .tagline {
+        font-size: 12px;
+        color: var(--bion-color-mute);
+        margin-bottom: 32px;
+        line-height: 1.5;
+      }
+      .nav-group {
+        font-size: 10.5px;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--bion-color-mute);
+        margin: 24px 0 10px;
+      }
+      nav a {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--bion-color-ink2);
+        text-decoration: none;
+        font-size: 13.5px;
+        padding: 7px 10px;
+        border-radius: var(--bion-radius-sm);
+        transition: 0.15s;
+        margin: 1px 0;
+      }
+      nav a:hover {
+        background: var(--bion-color-paper);
+        color: var(--bion-color-ink);
+      }
+      nav a .tag {
+        font-family: "JetBrains Mono";
+        font-size: 9.5px;
+        color: var(--bion-color-mute);
+        background: var(--bion-color-tile);
+        padding: 1px 6px;
+        border-radius: 99px;
+      }
+
+      main {
+        padding: 0;
+      }
+      .hero {
+        padding: 72px 64px 56px;
+        border-bottom: 1px solid var(--bion-color-line);
+      }
+      .hero .eyebrow {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--bion-color-mute);
+        margin-bottom: 20px;
+      }
+      .hero h1 {
+        font-size: clamp(36px, 5vw, 56px);
+        line-height: 1.02;
+        margin-bottom: 20px;
+        font-weight: 400;
+      }
+      .hero p {
+        font-size: 16px;
+        color: var(--bion-color-ink2);
+        max-width: 56ch;
+        line-height: 1.6;
+      }
+      .hero .meta {
+        display: flex;
+        gap: 40px;
+        margin-top: 36px;
+        padding-top: 28px;
+        border-top: 1px solid var(--bion-color-line);
+      }
+      .hero .meta .k {
+        font-size: 11px;
+        color: var(--bion-color-mute);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 6px;
+      }
+      .hero .meta .val {
+        font-family: var(--bion-font-display);
+        font-size: 24px;
+        font-weight: 500;
+      }
+
+      section.comp {
+        padding: 56px 64px;
+        border-bottom: 1px solid var(--bion-color-line);
+        scroll-margin-top: 20px;
+      }
+      .comp-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: 8px;
+      }
+      .comp-head h2 {
+        font-size: 26px;
+      }
+      .comp-head .tagchip {
+        font-family: "JetBrains Mono";
+        font-size: 11px;
+        color: var(--bion-color-mute);
+      }
+      .comp-desc {
+        font-size: 14.5px;
+        color: var(--bion-color-ink2);
+        max-width: 62ch;
+        line-height: 1.6;
+        margin-bottom: 8px;
+      }
+      .comp-events {
+        font-family: "JetBrains Mono";
+        font-size: 11.5px;
+        color: var(--bion-color-mute);
+        margin-bottom: 32px;
+      }
+      .comp-events b {
+        color: var(--bion-color-ink);
+        font-weight: 500;
+      }
+
+      /* canvas where components render */
+      .canvas {
+        border: 1px solid var(--bion-color-line);
+        border-radius: var(--bion-radius-lg);
+        background: var(--bion-color-paper);
+        padding: 48px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 32px;
+        align-items: center;
+        position: relative;
+        min-height: 120px;
+      }
+      .canvas.grid4 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        align-items: start;
+      }
+      .canvas.col {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .swatch-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0;
+      }
+      .tok-groups {
+        width: 100%;
+      }
+      .tok-group {
+        width: 100%;
+        font-family: "JetBrains Mono";
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--bion-color-mute);
+        margin: 0 0 14px;
+      }
+      .tok-group:not(:first-child) {
+        margin-top: 28px;
+      }
+      .tok .chip.meta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 6px;
+        background: var(--bion-color-tile);
+        font-family: "JetBrains Mono";
+        font-size: 10px;
+        line-height: 1.3;
+        color: var(--bion-color-ink);
+        word-break: break-word;
+      }
+
+      /* controls bar */
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        margin-top: 18px;
+        padding: 16px 20px;
+        background: var(--bion-color-tile);
+        border-radius: var(--bion-radius-md);
+        align-items: center;
+      }
+      .ctrl {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12.5px;
+        color: var(--bion-color-ink2);
+      }
+      .ctrl label {
+        font-weight: 500;
+        color: var(--bion-color-ink);
+      }
+      .ctrl input[type="text"] {
+        border: 1px solid var(--bion-color-line2);
+        border-radius: 6px;
+        padding: 5px 9px;
+        font-family: var(--bion-font-body);
+        font-size: 12.5px;
+        width: 130px;
+      }
+      .ctrl input[type="range"] {
+        accent-color: var(--bion-color-ink);
+      }
+      .ctrl select {
+        border: 1px solid var(--bion-color-line2);
+        border-radius: 6px;
+        padding: 5px 9px;
+        font-family: var(--bion-font-body);
+        font-size: 12.5px;
+        background: #fff;
+      }
+      .ctrl button.toggle {
+        border: 1px solid var(--bion-color-line2);
+        background: #fff;
+        border-radius: 6px;
+        padding: 5px 12px;
+        cursor: pointer;
+        font-size: 12px;
+        font-family: var(--bion-font-body);
+      }
+      .ctrl button.toggle[aria-pressed="true"] {
+        background: var(--bion-color-ink);
+        color: #fff;
+        border-color: var(--bion-color-ink);
+      }
+
+      /* event log */
+      .log {
+        margin-top: 14px;
+        font-family: "JetBrains Mono";
+        font-size: 11.5px;
+        color: var(--bion-color-mute);
+        min-height: 18px;
+      }
+      .log b {
+        color: var(--bion-color-ink);
+      }
+
+      /* usage snippet */
+      details.usage {
+        margin-top: 18px;
+        border: 1px solid var(--bion-color-line);
+        border-radius: var(--bion-radius-md);
+        overflow: hidden;
+      }
+      details.usage summary {
+        cursor: pointer;
+        padding: 11px 16px;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--bion-color-ink2);
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        user-select: none;
+      }
+      details.usage summary::-webkit-details-marker {
+        display: none;
+      }
+      details.usage summary::before {
+        content: "+";
+        font-family: "JetBrains Mono";
+        color: var(--bion-color-mute);
+      }
+      details.usage[open] summary::before {
+        content: "–";
+      }
+      details.usage pre {
+        margin: 0;
+        padding: 0 16px 16px;
+        font-family: "JetBrains Mono";
+        font-size: 12px;
+        line-height: 1.65;
+        color: var(--bion-color-ink2);
+        overflow-x: auto;
+        white-space: pre;
+      }
+      details.usage .tabs {
+        display: flex;
+        gap: 0;
+        border-bottom: 1px solid var(--bion-color-line);
+        padding: 0 16px;
+      }
+      details.usage .tabs button {
+        background: none;
+        border: none;
+        padding: 9px 12px;
+        font-family: var(--bion-font-body);
+        font-size: 11.5px;
+        color: var(--bion-color-mute);
+        cursor: pointer;
+        border-bottom: 1.5px solid transparent;
+        margin-bottom: -1px;
+      }
+      details.usage .tabs button.on {
+        color: var(--bion-color-ink);
+        border-bottom-color: var(--bion-color-ink);
+      }
+
+      /* token swatches */
+      .tok {
+        width: 96px;
+        text-align: center;
+        margin: 0 14px 22px 0;
+      }
+      .tok .chip {
+        width: 96px;
+        height: 64px;
+        border-radius: 8px;
+        border: 1px solid var(--bion-color-line);
+      }
+      .tok .name {
+        font-family: "JetBrains Mono";
+        font-size: 10px;
+        margin-top: 8px;
+        color: var(--bion-color-ink);
+      }
+      .tok .val {
+        font-family: "JetBrains Mono";
+        font-size: 9.5px;
+        color: var(--bion-color-mute);
+      }
+
+      footer {
+        padding: 40px 64px;
+        color: var(--bion-color-mute);
+        font-size: 12.5px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      @media (max-width: 900px) {
+        .shell {
+          grid-template-columns: 1fr;
+        }
+        aside {
+          position: static;
+          height: auto;
+          border-right: none;
+          border-bottom: 1px solid var(--bion-color-line);
+        }
+        .hero,
+        section.comp,
+        footer {
+          padding-left: 28px;
+          padding-right: 28px;
+        }
+        .canvas.grid4 {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <!-- ── sidebar ── -->
+      <aside>
+        <div class="brand">@bion-mfe-ui<span class="v">v0.1</span></div>
+        <div class="tagline">
+          Framework-agnostic design system for the Bion micro-frontends.
+        </div>
+        <div class="nav-group">Foundation</div>
+        <nav>
+          <a href="#tokens">Tokens</a>
+          <a href="#icon">Icon <span class="tag">shared</span></a>
+        </nav>
+        <div class="nav-group">Components</div>
+        <nav>
+          <a href="#button">Button <span class="tag">shared</span></a>
+          <a href="#chip">Chip <span class="tag">catalog</span></a>
+          <a href="#rating">Rating <span class="tag">catalog</span></a>
+          <a href="#product-card"
+            >ProductCard <span class="tag">catalog</span></a
+          >
+          <a href="#carousel">Carousel <span class="tag">catalog</span></a>
+          <a href="#quantity-stepper"
+            >QuantityStepper <span class="tag">cart</span></a
+          >
+          <a href="#cart-drawer">CartDrawer <span class="tag">cart</span></a>
+          <a href="#account-badge"
+            >AccountBadge <span class="tag">shell</span></a
+          >
+        </nav>
+      </aside>
+
+      <!-- ── content ── -->
+      <main>
+        <div class="hero">
+          <div class="eyebrow">Component preview</div>
+          <h1>One system,<br />three frameworks.</h1>
+          <p>
+            Every component below is a real Web Component built with Lit — the
+            same source that ships in <code>@bion-mfe-ui/core</code>. React and
+            Vue consume them through thin adapters with identical props and
+            events. Interact with the controls to see them live.
+          </p>
+          <div class="meta">
+            <div>
+              <div class="k">Components</div>
+              <div class="val">9</div>
+            </div>
+            <div>
+              <div class="k">Frameworks</div>
+              <div class="val">3</div>
+            </div>
+            <div>
+              <div class="k">Palette</div>
+              <div class="val">Mono</div>
+            </div>
+            <div>
+              <div class="k">Tokens</div>
+              <div class="val" id="tokCount">55</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOKENS -->
+        <section class="comp" id="tokens">
+          <div class="comp-head">
+            <h2>Tokens</h2>
+            <span class="tagchip">@bion-mfe-ui/tokens</span>
+          </div>
+          <p class="comp-desc">
+            The single source of truth. A pure monochrome scale — color encodes
+            elevation and text hierarchy only; ink itself is the accent. Every
+            value is a CSS variable consumed by all packages and inside shadow
+            DOM.
+          </p>
+          <div class="comp-events">
+            Changing a token re-themes every remote on rebuild → treat as
+            <b>semver-significant</b>.
+          </div>
+          <div class="canvas"><div class="tok-groups" id="swatches"></div></div>
+        </section>
+
+        <!-- ICON -->
+        <section class="comp" id="icon">
+          <div class="comp-head">
+            <h2>Icon</h2>
+            <span class="tagchip">&lt;bion-icon&gt;</span>
+          </div>
+          <p class="comp-desc">
+            Convenience wrapper over the raw SVG strings in
+            <code>@bion-mfe-ui/icons</code>. Inherits color via currentColor;
+            size and stroke are props.
+          </p>
+          <div class="canvas" id="iconCanvas"></div>
+          <div class="controls">
+            <div class="ctrl">
+              <label>size</label
+              ><input
+                type="range"
+                min="14"
+                max="48"
+                value="24"
+                id="iconSize"
+              /><span id="iconSizeV" class="mono">24</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- BUTTON -->
+        <section class="comp" id="button">
+          <div class="comp-head">
+            <h2>Button</h2>
+            <span class="tagchip">&lt;bion-button&gt;</span>
+          </div>
+          <p class="comp-desc">
+            Three variants: solid, outline, and icon-only. Optional trailing
+            icon. Fires native <code>click</code> — no custom event needed.
+          </p>
+          <div class="canvas">
+            <bion-button variant="solid" icon="arrowRight"
+              >Lihat koleksi</bion-button
+            >
+            <bion-button variant="outline">Keranjang</bion-button>
+            <bion-button
+              variant="icon"
+              icon="search"
+              label="Search"
+            ></bion-button>
+            <bion-button variant="solid" disabled>Disabled</bion-button>
+          </div>
+          <details
+            class="usage"
+            data-react='import { Button } from &apos;@bion-mfe-ui/react&apos;;
+
+<Button variant="solid" icon="arrowRight" onClick={fn}>
+  Lihat koleksi
+</Button>'
+            data-vue='<script setup>
+import { Button } from &apos;@bion-mfe-ui/vue&apos;;
+</script>
+
+<Button variant="solid" icon="arrowRight" @click="fn">
+  Lihat koleksi
+</Button>'
+            data-html='<bion-button variant="solid" icon="arrowRight">
+  Lihat koleksi
+</bion-button>'
+          ></details>
+        </section>
+
+        <!-- CHIP -->
+        <section class="comp" id="chip">
+          <div class="comp-head">
+            <h2>Chip</h2>
+            <span class="tagchip">&lt;bion-chip&gt;</span>
+          </div>
+          <p class="comp-desc">
+            Underline-on-active filter chip. The parent owns which chip is
+            active — the chip only reports intent, so a remote drives filtering
+            (not the design system).
+          </p>
+          <div class="comp-events">Emits <b>bion-select</b> { value }</div>
+          <div class="canvas" id="chipCanvas"></div>
+          <div class="log" id="chipLog">— interact to see events</div>
+        </section>
+
+        <!-- RATING -->
+        <section class="comp" id="rating">
+          <div class="comp-head">
+            <h2>Rating</h2>
+            <span class="tagchip">&lt;bion-rating&gt;</span>
+          </div>
+          <p class="comp-desc">
+            Display-only star rating with optional review count. Read-only by
+            design.
+          </p>
+          <div class="canvas col">
+            <bion-rating value="5" reviews="1.2rb"></bion-rating>
+            <bion-rating value="4" reviews="847"></bion-rating>
+            <bion-rating value="3" reviews="210"></bion-rating>
+          </div>
+          <div class="controls">
+            <div class="ctrl">
+              <label>value</label
+              ><input type="range" min="0" max="5" value="5" id="rateV" /><span
+                id="rateVV"
+                class="mono"
+                >5</span
+              >
+            </div>
+          </div>
+        </section>
+
+        <!-- PRODUCT CARD -->
+        <section class="comp" id="product-card">
+          <div class="comp-head">
+            <h2>ProductCard</h2>
+            <span class="tagchip">&lt;bion-product-card&gt;</span>
+          </div>
+          <p class="comp-desc">
+            The catalog's workhorse. Owns only presentation + the favourite
+            toggle. It never knows about a cart or currency — it emits events
+            and lets the remote decide. Hover to reveal the add and favourite
+            buttons.
+          </p>
+          <div class="comp-events">
+            Emits <b>bion-add</b> · <b>bion-favorite</b> · <b>bion-select</b>
+          </div>
+          <div class="canvas grid4" id="cardCanvas"></div>
+          <div class="log" id="cardLog">— hover a card, then click + or ♥</div>
+          <details
+            class="usage"
+            data-react='import { ProductCard } from &apos;@bion-mfe-ui/react&apos;;
+
+<ProductCard
+  name="Auro Headset" brand="Auro" price="Rp 349.000"
+  oldPrice="Rp 499.000" glyph="audio" tag="30% off"
+  rating={5} reviews="1.2rb"
+  onAdd={({ name }) => window.dispatchEvent(
+    new CustomEvent(&apos;cart:add-item&apos;, { detail: { product: { name } } })
+  )}
+/>'
+            data-vue='<ProductCard
+  name="Auro Headset" brand="Auro" price="Rp 349.000"
+  glyph="audio" :rating="5" reviews="1.2rb"
+  @add="onAdd" />'
+            data-html='<bion-product-card name="Auro Headset" brand="Auro"
+  price="Rp 349.000" glyph="audio" tag="30% off"
+  rating="5" reviews="1.2rb"></bion-product-card>'
+          ></details>
+        </section>
+
+        <!-- CAROUSEL -->
+        <section class="comp" id="carousel">
+          <div class="comp-head">
+            <h2>Carousel</h2>
+            <span class="tagchip">&lt;bion-carousel&gt;</span>
+          </div>
+          <p class="comp-desc">
+            Banner carousel: scroll-snap track of slotted children, auto-rotate,
+            arrows that reveal on hover (dark ink, no chrome), bottom-left dots,
+            and a scrim so dots stay legible. Slides are whatever you slot in.
+            Hover to see arrows.
+          </p>
+          <div class="canvas" style="padding: 24px">
+            <bion-carousel aspect="16/9" interval="4000" style="width: 100%">
+              <div
+                class="slide"
+                style="
+                  display: grid;
+                  place-items: center;
+                  background: var(--bion-color-tile);
+                  color: var(--bion-color-mute);
+                "
+              >
+                Banner 1 — audio
+              </div>
+              <div
+                class="slide"
+                style="
+                  display: grid;
+                  place-items: center;
+                  background: #e7e7e4;
+                  color: var(--bion-color-mute);
+                "
+              >
+                Banner 2 — wearable
+              </div>
+              <div
+                class="slide"
+                style="
+                  display: grid;
+                  place-items: center;
+                  background: #efefec;
+                  color: var(--bion-color-mute);
+                "
+              >
+                Banner 3 — camera
+              </div>
+            </bion-carousel>
+          </div>
+        </section>
+
+        <!-- QUANTITY STEPPER -->
+        <section class="comp" id="quantity-stepper">
+          <div class="comp-head">
+            <h2>QuantityStepper</h2>
+            <span class="tagchip">&lt;bion-quantity-stepper&gt;</span>
+          </div>
+          <p class="comp-desc">
+            Pill stepper for cart line items. Emits the new value; the cart
+            remote decides what a change means (e.g. remove at 0). The stepper
+            only reports the number.
+          </p>
+          <div class="comp-events">Emits <b>bion-change</b> { value }</div>
+          <div class="canvas col">
+            <bion-quantity-stepper
+              value="1"
+              min="0"
+              id="qty"
+            ></bion-quantity-stepper>
+          </div>
+          <div class="log" id="qtyLog">— value: 1</div>
+        </section>
+
+        <!-- CART DRAWER -->
+        <section class="comp" id="cart-drawer">
+          <div class="comp-head">
+            <h2>CartDrawer</h2>
+            <span class="tagchip">&lt;bion-cart-drawer&gt;</span>
+          </div>
+          <p class="comp-desc">
+            Slide-over drawer. Receives line items and
+            <em>pre-formatted</em> subtotal/total strings — it never does
+            currency math. Keeps the source of truth in the cart remote, passes
+            strings in, reacts to events out.
+          </p>
+          <div class="comp-events">
+            Emits <b>bion-close</b> · <b>bion-quantity-change</b> { id, value }
+            · <b>bion-checkout</b>
+          </div>
+          <div class="canvas">
+            <bion-button variant="solid" icon="cart" id="openCart"
+              >Open cart drawer</bion-button
+            >
+            <span style="color: var(--bion-color-mute); font-size: 13px"
+              >item qty changes update the totals live</span
+            >
+          </div>
+          <div class="log" id="cartLog">— drawer closed</div>
+        </section>
+
+        <!-- ACCOUNT BADGE -->
+        <section class="comp" id="account-badge">
+          <div class="comp-head">
+            <h2>AccountBadge</h2>
+            <span class="tagchip">&lt;bion-account-badge&gt;</span>
+          </div>
+          <p class="comp-desc">
+            Shell-owned identity chip. Purely presentational — shows who is
+            signed in. It does no auth; the shell passes the resolved name.
+            Initials derive automatically if omitted.
+          </p>
+          <div class="comp-events">Emits <b>bion-select</b> { name }</div>
+          <div class="canvas col">
+            <bion-account-badge name="Ilham"></bion-account-badge>
+            <bion-account-badge
+              name="Olivia Tan"
+              initials="OT"
+            ></bion-account-badge>
+          </div>
+          <div class="log" id="badgeLog">— click a badge</div>
+        </section>
+
+        <footer>
+          <span>@bion-mfe-ui — component preview</span>
+          <span>Web Components · Lit · monochrome</span>
+        </footer>
+      </main>
+    </div>
+
+    <script type="importmap">
+      { "imports": { "lit": "https://cdn.jsdelivr.net/npm/lit@3.2.1/+esm" } }
+    </script>
+
+    <script type="module">
+      import { LitElement, html, css, nothing } from "lit";
+
+      /* ── icons (from @bion-mfe-ui/icons) ── */
+      const icons = {
+        cart: '<path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L5 3H2"/><circle cx="9" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/>',
+        search: '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/>',
+        heart:
+          '<path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/>',
+        plus: '<path d="M12 5v14M5 12h14"/>',
+        minus: '<path d="M5 12h14"/>',
+        close: '<path d="M18 6L6 18M6 6l12 12"/>',
+        chevronLeft: '<path d="M15 6l-6 6 6 6"/>',
+        chevronRight: '<path d="M9 6l6 6-6 6"/>',
+        chevronDown: '<path d="M6 9l6 6 6-6"/>',
+        arrowRight: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+        star: '<path d="M12 2l3 6.5 7 .9-5 4.8 1.3 7L12 18l-6.3 3.2L7 14.2 2 9.4l7-.9z"/>',
+        box: '<path d="M4 7h16v13H4z"/><path d="M4 7l2-3h12l2 3"/>',
+        image:
+          '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="9" r="1.6"/><path d="M21 16l-5-5L5 21"/>',
+        audio:
+          '<path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/>',
+        watch:
+          '<circle cx="12" cy="12" r="6"/><path d="M12 9v3l1.5 1.5M9 3h6l.5 3M9 21h6l.5-3"/>',
+        camera:
+          '<path d="M3 8a2 2 0 012-2h2l1.5-2h7L18 6h1a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><circle cx="12" cy="13" r="3.5"/>',
+        speaker:
+          '<rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="15" r="3.5"/><circle cx="12" cy="6" r="1"/>',
+      };
+      const rawSvg = null;
+      // icon helper: inject raw SVG inner markup via .innerHTML (works for SVG in Lit)
+      function iconSVG(name, size = 24, sw = 1.6) {
+        return html`<svg
+          viewBox="0 0 24 24"
+          width=${size}
+          height=${size}
+          fill="none"
+          stroke="currentColor"
+          stroke-width=${sw}
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          .innerHTML=${icons[name] ?? icons.box}
+        ></svg>`;
+      }
+
+      /* host tokens for shadow DOM (inherits from :root, fallback inline) */
+      const hostTokens = css`
+        :host {
+          box-sizing: border-box;
+        }
+        *,
+        *::before,
+        *::after {
+          box-sizing: border-box;
+        }
+      `;
+
+      /* ── bion-icon ── */
+      class BionIcon extends LitElement {
+        static properties = {
+          name: {},
+          size: { type: Number },
+          strokeWidth: { type: Number, attribute: "stroke-width" },
+        };
+        constructor() {
+          super();
+          this.name = "box";
+          this.size = 20;
+          this.strokeWidth = 1.6;
+        }
+        static styles = [
+          hostTokens,
+          css`
+            :host {
+              display: inline-flex;
+              line-height: 0;
+              color: inherit;
+            }
+            svg {
+              display: block;
+            }
+          `,
+        ];
+        render() {
+          return iconSVG(this.name, this.size, this.strokeWidth);
+        }
+      }
+      customElements.define("bion-icon", BionIcon);
+
+      /* ── bion-button ── */
+      class BionButton extends LitElement {
+        static properties = {
+          variant: {},
+          icon: {},
+          label: {},
+          disabled: { type: Boolean },
+        };
+        constructor() {
+          super();
+          this.variant = "solid";
+          this.disabled = false;
+          this.label = "";
+        }
+        static styles = [
+          hostTokens,
+          css`
+            :host {
+              display: inline-block;
+            }
+            button {
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              gap: var(--bion-space-2);
+              font-family: var(--bion-font-body);
+              font-size: var(--bion-font-size-sm);
+              line-height: 1;
+              cursor: pointer;
+              border-radius: var(--bion-radius-pill);
+              border: 1px solid transparent;
+              transition: var(--bion-motion-base) var(--bion-motion-ease);
+              color: inherit;
+            }
+            button:disabled {
+              opacity: 0.45;
+              cursor: not-allowed;
+            }
+            .solid {
+              background: var(--bion-color-ink);
+              color: var(--bion-color-on-ink);
+              padding: 13px 24px;
+            }
+            .solid:hover:not(:disabled) {
+              gap: var(--bion-space-3);
+            }
+            .outline {
+              background: none;
+              color: var(--bion-color-ink);
+              border-color: var(--bion-color-line2);
+              padding: 9px 16px;
+            }
+            .outline:hover:not(:disabled) {
+              border-color: var(--bion-color-ink);
+            }
+            .icon {
+              width: 40px;
+              height: 40px;
+              padding: 0;
+              border-radius: 50%;
+              background: var(--bion-color-ink);
+              color: var(--bion-color-on-ink);
+            }
+            .icon:active:not(:disabled) {
+              transform: scale(0.92);
+            }
+          `,
+        ];
+        render() {
+          const sz = this.variant === "icon" ? 18 : 15;
+          const g = this.icon ? iconSVG(this.icon, sz, 1.8) : nothing;
+          return html`<button
+            class=${this.variant}
+            ?disabled=${this.disabled}
+            aria-label=${this.variant === "icon" ? this.label : nothing}
+          >
+            ${this.variant === "icon" ? g : html`<slot></slot>${g}`}
+          </button>`;
+        }
+      }
+      customElements.define("bion-button", BionButton);
+
+      /* ── bion-chip ── */
+      class BionChip extends LitElement {
+        static properties = {
+          value: {},
+          active: { type: Boolean, reflect: true },
+        };
+        constructor() {
+          super();
+          this.value = "";
+          this.active = false;
+        }
+        static styles = [
+          hostTokens,
+          css`
+            :host {
+              display: inline-block;
+            }
+            button {
+              background: none;
+              border: none;
+              padding: 0;
+              color: var(--bion-color-mute);
+              cursor: pointer;
+              position: relative;
+              font-family: var(--bion-font-body);
+              font-size: var(--bion-font-size-sm);
+              transition: var(--bion-motion-fast);
+            }
+            button:hover {
+              color: var(--bion-color-ink);
+            }
+            :host([active]) button {
+              color: var(--bion-color-ink);
+              font-weight: 500;
+            }
+            :host([active]) button::after {
+              content: "";
+              position: absolute;
+              left: 0;
+              right: 0;
+              bottom: -6px;
+              height: 1px;
+              background: var(--bion-color-ink);
+            }
+          `,
+        ];
+        render() {
+          return html`<button
+            aria-pressed=${this.active}
+            @click=${() =>
+              this.dispatchEvent(
+                new CustomEvent("bion-select", {
+                  detail: { value: this.value },
+                  bubbles: true,
+                  composed: true,
+                }),
+              )}
+          >
+            <slot></slot>
+          </button>`;
+        }
+      }
+      customElements.define("bion-chip", BionChip);
+
+      /* ── bion-rating ── */
+      class BionRating extends LitElement {
+        static properties = {
+          value: { type: Number },
+          reviews: {},
+          max: { type: Number },
+        };
+        constructor() {
+          super();
+          this.value = 0;
+          this.reviews = "";
+          this.max = 5;
+        }
+        static styles = [
+          hostTokens,
+          css`
+            :host {
+              display: inline-flex;
+              align-items: center;
+              gap: var(--bion-space-1);
+            }
+            .stars {
+              display: flex;
+              gap: 1.5px;
+            }
+            .stars svg {
+              width: 11px;
+              height: 11px;
+              color: var(--bion-color-ink);
+              fill: var(--bion-color-ink);
+            }
+            .stars svg.empty {
+              color: var(--bion-color-line2);
+              fill: var(--bion-color-line2);
+            }
+            .count {
+              font-size: var(--bion-font-size-2xs);
+              color: var(--bion-color-mute);
+            }
+          `,
+        ];
+        render() {
+          const stars = Array.from(
+            { length: this.max },
+            (_, i) =>
+              html`<svg
+                class=${i < this.value ? "" : "empty"}
+                viewBox="0 0 24 24"
+                .innerHTML=${icons.star}
+              ></svg>`,
+          );
+          return html`<span class="stars">${stars}</span>${this.reviews
+              ? html`<span class="count">(${this.reviews})</span>`
+              : nothing}`;
+        }
+      }
+      customElements.define("bion-rating", BionRating);
+
+      /* ── bion-product-card ── */
+      class BionProductCard extends LitElement {
+        static properties = {
+          name: {},
+          brand: {},
+          price: {},
+          oldPrice: { attribute: "old-price" },
+          glyph: {},
+          image: {},
+          tag: {},
+          rating: { type: Number },
+          reviews: {},
+          favorite: { type: Boolean, reflect: true },
+        };
+        constructor() {
+          super();
+          this.name = "";
+          this.brand = "";
+          this.price = "";
+          this.glyph = "box";
+          this.image = "";
+          this.tag = "";
+          this.rating = 0;
+          this.reviews = "";
+          this.favorite = false;
+        }
+        static styles = [
+          hostTokens,
+          css`
+            :host {
+              display: block;
+            }
+            .card {
+              display: flex;
+              flex-direction: column;
+              cursor: pointer;
+            }
+            .thumb {
+              aspect-ratio: 1;
+              background: var(--bion-color-tile);
+              border: 1px solid var(--bion-color-line);
+              border-radius: var(--bion-radius-lg);
+              display: grid;
+              place-items: center;
+              position: relative;
+              overflow: hidden;
+              transition: var(--bion-motion-base) var(--bion-motion-ease);
+            }
+            .card:hover .thumb {
+              border-color: var(--bion-color-line2);
+            }
+            .glyph {
+              width: 40%;
+              height: 40%;
+              color: var(--bion-color-ink);
+              transition: transform var(--bion-motion-slow)
+                var(--bion-motion-ease);
+            }
+            .card:hover .glyph {
+              transform: scale(1.06);
+            }
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+            .tag {
+              position: absolute;
+              top: 13px;
+              left: 13px;
+              font-size: var(--bion-font-size-2xs);
+              font-weight: 500;
+              letter-spacing: var(--bion-letter-spacing-wide);
+              text-transform: uppercase;
+              color: var(--bion-color-ink);
+              background: rgba(255, 255, 255, 0.85);
+              padding: 4px 9px;
+              border-radius: var(--bion-radius-pill);
+            }
+            .fav,
+            .add {
+              border: none;
+              cursor: pointer;
+              display: grid;
+              place-items: center;
+            }
+            .fav {
+              position: absolute;
+              top: 11px;
+              right: 11px;
+              width: 32px;
+              height: 32px;
+              border-radius: 50%;
+              background: none;
+              color: var(--bion-color-ink2);
+              opacity: 0;
+              transition: var(--bion-motion-base) var(--bion-motion-ease);
+            }
+            .card:hover .fav,
+            :host([favorite]) .fav {
+              opacity: 1;
+            }
+            :host([favorite]) .fav {
+              color: var(--bion-color-ink);
+            }
+            :host([favorite]) .fav svg {
+              fill: var(--bion-color-ink);
+            }
+            .add {
+              position: absolute;
+              right: 13px;
+              bottom: 13px;
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              background: var(--bion-color-ink);
+              color: var(--bion-color-on-ink);
+              opacity: 0;
+              transform: translateY(8px) scale(0.9);
+              transition: var(--bion-motion-base) var(--bion-motion-ease);
+            }
+            .card:hover .add {
+              opacity: 1;
+              transform: translateY(0) scale(1);
+            }
+            .add svg {
+              transition: transform var(--bion-motion-base)
+                var(--bion-motion-ease);
+            }
+            .add:hover svg {
+              transform: rotate(90deg);
+            }
+            .body {
+              padding: 15px 2px 0;
+              display: flex;
+              flex-direction: column;
+            }
+            .brand {
+              font-size: var(--bion-font-size-2xs);
+              color: var(--bion-color-mute);
+              letter-spacing: var(--bion-letter-spacing-wide);
+              text-transform: uppercase;
+              margin-bottom: 5px;
+            }
+            .name {
+              font-family: var(--bion-font-display);
+              font-weight: 500;
+              font-size: var(--bion-font-size-md);
+              line-height: var(--bion-line-height-snug);
+              margin-bottom: 10px;
+            }
+            .rating {
+              display: flex;
+              align-items: center;
+              gap: var(--bion-space-1);
+              margin-bottom: 12px;
+            }
+            .stars {
+              display: flex;
+              gap: 1.5px;
+            }
+            .stars svg {
+              width: 11px;
+              height: 11px;
+              color: var(--bion-color-ink);
+              fill: var(--bion-color-ink);
+            }
+            .stars svg.empty {
+              color: var(--bion-color-line2);
+              fill: var(--bion-color-line2);
+            }
+            .reviews {
+              font-size: var(--bion-font-size-2xs);
+              color: var(--bion-color-mute);
+            }
+            .price {
+              font-family: var(--bion-font-display);
+              font-weight: 500;
+              font-size: var(--bion-font-size-md);
+              font-variant-numeric: tabular-nums;
+            }
+            .price s {
+              color: var(--bion-color-mute);
+              font-weight: 400;
+              font-size: var(--bion-font-size-xs);
+              margin-left: 2px;
+            }
+          `,
+        ];
+        emit(t, d) {
+          this.dispatchEvent(
+            new CustomEvent(t, { detail: d, bubbles: true, composed: true }),
+          );
+        }
+        render() {
+          const stars = Array.from(
+            { length: 5 },
+            (_, i) =>
+              html`<svg
+                class=${i < this.rating ? "" : "empty"}
+                viewBox="0 0 24 24"
+                .innerHTML=${icons.star}
+              ></svg>`,
+          );
+          return html`<article
+            class="card"
+            @click=${() => this.emit("bion-select", { name: this.name })}
+          >
+            <div class="thumb">
+              ${this.tag ? html`<span class="tag">${this.tag}</span>` : nothing}
+              <button
+                class="fav"
+                aria-pressed=${this.favorite}
+                @click=${(e) => {
+                  e.stopPropagation();
+                  this.favorite = !this.favorite;
+                  this.emit("bion-favorite", { favorite: this.favorite });
+                }}
+              >
+                ${iconSVG("heart", 16, 1.5)}
+              </button>
+              ${this.image
+                ? html`<img src=${this.image} alt=${this.name} />`
+                : html`<svg
+                    class="glyph"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width=".9"
+                    .innerHTML=${icons[this.glyph]}
+                  ></svg>`}
+              <button
+                class="add"
+                @click=${(e) => {
+                  e.stopPropagation();
+                  this.emit("bion-add", { name: this.name });
+                }}
+              >
+                ${iconSVG("plus", 18, 2)}
+              </button>
+            </div>
+            <div class="body">
+              ${this.brand
+                ? html`<span class="brand">${this.brand}</span>`
+                : nothing}
+              <span class="name">${this.name}</span>
+              ${this.rating
+                ? html`<span class="rating"
+                    ><span class="stars">${stars}</span>${this.reviews
+                      ? html`<span class="reviews">(${this.reviews})</span>`
+                      : nothing}</span
+                  >`
+                : nothing}
+              <span class="price"
+                >${this.price}${this.oldPrice
+                  ? html`<s>${this.oldPrice}</s>`
+                  : nothing}</span
+              >
+            </div>
+          </article>`;
+        }
+      }
+      customElements.define("bion-product-card", BionProductCard);
+
+      /* ── bion-quantity-stepper ── */
+      class BionQuantityStepper extends LitElement {
+        static properties = {
+          value: { type: Number },
+          min: { type: Number },
+          max: { type: Number },
+        };
+        constructor() {
+          super();
+          this.value = 1;
+          this.min = 0;
+          this.max = Infinity;
+        }
+        static styles = [
+          hostTokens,
+          css`
+            :host {
+              display: inline-flex;
+            }
+            .qty {
+              display: flex;
+              align-items: center;
+              border: 1px solid var(--bion-color-line2);
+              border-radius: var(--bion-radius-pill);
+            }
+            button {
+              width: 28px;
+              height: 28px;
+              border-radius: 50%;
+              border: none;
+              background: none;
+              cursor: pointer;
+              color: var(--bion-color-ink);
+              display: grid;
+              place-items: center;
+              transition: var(--bion-motion-fast);
+            }
+            button:hover:not(:disabled) {
+              background: var(--bion-color-tile);
+            }
+            button:disabled {
+              opacity: 0.35;
+              cursor: not-allowed;
+            }
+            span {
+              min-width: 26px;
+              text-align: center;
+              font-size: var(--bion-font-size-sm);
+              font-variant-numeric: tabular-nums;
+            }
+            svg {
+              display: block;
+            }
+          `,
+        ];
+        set(n) {
+          const c = Math.max(this.min, Math.min(this.max, n));
+          if (c === this.value) return;
+          this.value = c;
+          this.dispatchEvent(
+            new CustomEvent("bion-change", {
+              detail: { value: c },
+              bubbles: true,
+              composed: true,
+            }),
+          );
+        }
+        render() {
+          return html`<div class="qty">
+            <button
+              aria-label="Decrease"
+              ?disabled=${this.value <= this.min}
+              @click=${() => this.set(this.value - 1)}
+            >
+              ${iconSVG("minus", 14, 1.8)}
+            </button>
+            <span>${this.value}</span>
+            <button
+              aria-label="Increase"
+              ?disabled=${this.value >= this.max}
+              @click=${() => this.set(this.value + 1)}
+            >
+              ${iconSVG("plus", 14, 1.8)}
+            </button>
+          </div>`;
+        }
+      }
+      customElements.define("bion-quantity-stepper", BionQuantityStepper);
+
+      /* ── bion-account-badge ── */
+      class BionAccountBadge extends LitElement {
+        static properties = { name: {}, initials: {} };
+        constructor() {
+          super();
+          this.name = "";
+          this.initials = "";
+        }
+        static styles = [
+          hostTokens,
+          css`
+            :host {
+              display: inline-block;
+            }
+            button {
+              display: flex;
+              align-items: center;
+              gap: var(--bion-space-2);
+              background: none;
+              border: none;
+              cursor: pointer;
+              padding: 0;
+              font-family: var(--bion-font-body);
+              font-size: var(--bion-font-size-sm);
+              color: var(--bion-color-ink2);
+            }
+            .av {
+              width: 28px;
+              height: 28px;
+              border-radius: 50%;
+              background: var(--bion-color-ink);
+              color: var(--bion-color-on-ink);
+              display: grid;
+              place-items: center;
+              font-family: var(--bion-font-display);
+              font-weight: 500;
+              font-size: var(--bion-font-size-2xs);
+            }
+          `,
+        ];
+        get _ini() {
+          return (
+            this.initials ||
+            this.name
+              .split(/\s+/)
+              .map((w) => w[0] ?? "")
+              .slice(0, 2)
+              .join("")
+              .toUpperCase()
+          );
+        }
+        render() {
+          return html`<button
+            @click=${() =>
+              this.dispatchEvent(
+                new CustomEvent("bion-select", {
+                  detail: { name: this.name },
+                  bubbles: true,
+                  composed: true,
+                }),
+              )}
+          >
+            <span class="av">${this._ini}</span>${this.name
+              ? html`<span>${this.name}</span>`
+              : nothing}
+          </button>`;
+        }
+      }
+      customElements.define("bion-account-badge", BionAccountBadge);
+
+      /* ── bion-carousel ── */
+      class BionCarousel extends LitElement {
+        static properties = {
+          aspect: {},
+          interval: { type: Number },
+          _index: { state: true },
+          _count: { state: true },
+        };
+        constructor() {
+          super();
+          this.aspect = "16/9";
+          this.interval = 5500;
+          this._index = 0;
+          this._count = 0;
+        }
+        static styles = [
+          hostTokens,
+          css`
+            :host {
+              display: block;
+              position: relative;
+            }
+            .track {
+              display: flex;
+              overflow-x: auto;
+              scroll-snap-type: x mandatory;
+              scroll-behavior: smooth;
+              border-radius: var(--bion-radius-lg);
+              scrollbar-width: none;
+            }
+            .track::-webkit-scrollbar {
+              display: none;
+            }
+            ::slotted(*) {
+              flex: 0 0 100%;
+              scroll-snap-align: center;
+              aspect-ratio: var(--bion-carousel-aspect, 16/9);
+              object-fit: cover;
+              display: block;
+              border-radius: var(--bion-radius-lg);
+              border: 1px solid var(--bion-color-line);
+              font-family: var(--bion-font-display);
+              font-size: 18px;
+            }
+            .scrim {
+              position: absolute;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              height: 72px;
+              background: linear-gradient(transparent, rgba(0, 0, 0, 0.3));
+              pointer-events: none;
+              z-index: 2;
+              border-radius: 0 0 var(--bion-radius-lg) var(--bion-radius-lg);
+            }
+            .arrow {
+              position: absolute;
+              top: 50%;
+              transform: translateY(-50%) scale(0.92);
+              z-index: 6;
+              width: 48px;
+              height: 48px;
+              border: none;
+              background: none;
+              color: var(--bion-color-ink);
+              cursor: pointer;
+              display: grid;
+              place-items: center;
+              opacity: 0;
+              transition: var(--bion-motion-base) var(--bion-motion-ease);
+            }
+            :host(:hover) .arrow {
+              opacity: 1;
+              transform: translateY(-50%) scale(1);
+            }
+            .arrow:hover {
+              opacity: 0.7;
+            }
+            .arrow.prev {
+              left: 12px;
+            }
+            .arrow.next {
+              right: 12px;
+            }
+            .arrow svg {
+              width: 34px;
+              height: 34px;
+            }
+            .dots {
+              position: absolute;
+              bottom: 16px;
+              left: 16px;
+              z-index: 6;
+              display: flex;
+              gap: 8px;
+            }
+            .dots button {
+              width: 24px;
+              height: 3px;
+              border: none;
+              border-radius: var(--bion-radius-pill);
+              background: rgba(255, 255, 255, 0.5);
+              cursor: pointer;
+              padding: 0;
+              transition: var(--bion-motion-base) var(--bion-motion-ease);
+            }
+            .dots button.on {
+              background: #fff;
+              width: 32px;
+            }
+          `,
+        ];
+        firstUpdated() {
+          this.style.setProperty("--bion-carousel-aspect", this.aspect);
+          this._start();
+        }
+        disconnectedCallback() {
+          super.disconnectedCallback();
+          this._stop();
+        }
+        get _slides() {
+          const s = this.shadowRoot.querySelector("slot");
+          return s ? s.assignedElements() : [];
+        }
+        _start() {
+          this._stop();
+          if (this.interval > 0)
+            this._t = setInterval(
+              () => this._go(this._index + 1),
+              this.interval,
+            );
+        }
+        _stop() {
+          if (this._t) clearInterval(this._t);
+        }
+        _go(i) {
+          const n = this._slides.length;
+          if (!n) return;
+          this._index = (i + n) % n;
+          const track = this.shadowRoot.querySelector(".track");
+          const w = this._slides[0]?.offsetWidth || 0;
+          track?.scrollTo({ left: w * this._index, behavior: "smooth" });
+          this._start();
+        }
+        _slot() {
+          this._count = this._slides.length;
+        }
+        render() {
+          return html`
+            <div
+              class="track"
+              @scroll=${(e) => {
+                const w = this._slides[0]?.offsetWidth || 1;
+                const i = Math.round(e.target.scrollLeft / w);
+                if (i !== this._index) this._index = i;
+              }}
+            >
+              <slot @slotchange=${this._slot}></slot>
+            </div>
+            <div class="scrim"></div>
+            ${this._count > 1
+              ? html`
+                  <button
+                    class="arrow prev"
+                    @click=${() => this._go(this._index - 1)}
+                  >
+                    ${iconSVG("chevronLeft", 34, 1.6)}
+                  </button>
+                  <button
+                    class="arrow next"
+                    @click=${() => this._go(this._index + 1)}
+                  >
+                    ${iconSVG("chevronRight", 34, 1.6)}
+                  </button>
+                  <div class="dots">
+                    ${Array.from(
+                      { length: this._count },
+                      (_, i) =>
+                        html`<button
+                          class=${i === this._index ? "on" : ""}
+                          @click=${() => this._go(i)}
+                        ></button>`,
+                    )}
+                  </div>
+                `
+              : nothing}
+          `;
+        }
+      }
+      customElements.define("bion-carousel", BionCarousel);
+
+      /* ── bion-cart-drawer ── */
+      class BionCartDrawer extends LitElement {
+        static properties = {
+          items: { attribute: false },
+          subtotal: {},
+          total: {},
+          shipping: {},
+          open: { type: Boolean, reflect: true },
+        };
+        constructor() {
+          super();
+          this.items = [];
+          this.subtotal = "";
+          this.total = "";
+          this.shipping = "Gratis";
+          this.open = false;
+        }
+        static styles = [
+          hostTokens,
+          css`
+            :host {
+              display: contents;
+            }
+            .scrim {
+              position: fixed;
+              inset: 0;
+              background: transparent;
+              z-index: var(--bion-z-index-scrim);
+              pointer-events: none;
+              transition: background var(--bion-motion-slow)
+                var(--bion-motion-ease);
+            }
+            :host([open]) .scrim {
+              background: var(--bion-color-scrim);
+              pointer-events: auto;
+            }
+            .drawer {
+              position: fixed;
+              top: 0;
+              right: 0;
+              bottom: 0;
+              width: 418px;
+              max-width: 92vw;
+              z-index: var(--bion-z-index-drawer);
+              background: var(--bion-color-bg);
+              border-left: 1px solid var(--bion-color-line);
+              transform: translateX(100%);
+              transition: transform var(--bion-motion-slow)
+                var(--bion-motion-ease);
+              display: flex;
+              flex-direction: column;
+            }
+            :host([open]) .drawer {
+              transform: translateX(0);
+            }
+            .head {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              padding: 26px 28px 22px;
+              border-bottom: 1px solid var(--bion-color-line);
+            }
+            .head h2 {
+              font-family: var(--bion-font-display);
+              font-weight: 500;
+              font-size: var(--bion-font-size-lg);
+              display: flex;
+              align-items: baseline;
+              gap: 9px;
+              letter-spacing: var(--bion-letter-spacing-tight);
+            }
+            .head .n {
+              font-size: var(--bion-font-size-sm);
+              color: var(--bion-color-mute);
+            }
+            .close {
+              width: 34px;
+              height: 34px;
+              border-radius: 50%;
+              border: none;
+              background: none;
+              cursor: pointer;
+              color: var(--bion-color-ink);
+              display: grid;
+              place-items: center;
+              transition: var(--bion-motion-fast);
+            }
+            .close:hover {
+              background: var(--bion-color-tile);
+            }
+            .items {
+              flex: 1;
+              overflow-y: auto;
+              padding: 0 28px;
+            }
+            .row {
+              display: flex;
+              gap: 16px;
+              padding: 22px 0;
+              border-bottom: 1px solid var(--bion-color-line);
+            }
+            .thumb {
+              width: 72px;
+              height: 72px;
+              border-radius: var(--bion-radius-md);
+              background: var(--bion-color-tile);
+              border: 1px solid var(--bion-color-line);
+              display: grid;
+              place-items: center;
+              flex-shrink: 0;
+            }
+            .thumb svg {
+              width: 38%;
+              height: 38%;
+              color: var(--bion-color-ink);
+            }
+            .info {
+              flex: 1;
+              min-width: 0;
+              display: flex;
+              flex-direction: column;
+            }
+            .info .nm {
+              font-family: var(--bion-font-display);
+              font-weight: 500;
+              font-size: var(--bion-font-size-base);
+              line-height: var(--bion-line-height-snug);
+            }
+            .info .br {
+              font-size: var(--bion-font-size-2xs);
+              color: var(--bion-color-mute);
+              letter-spacing: var(--bion-letter-spacing-wide);
+              text-transform: uppercase;
+              margin-top: 3px;
+            }
+            .info .row2 {
+              margin-top: auto;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              padding-top: 14px;
+            }
+            .lt {
+              font-family: var(--bion-font-display);
+              font-weight: 500;
+              font-size: var(--bion-font-size-base);
+              font-variant-numeric: tabular-nums;
+            }
+            .foot {
+              padding: 24px 28px 28px;
+              border-top: 1px solid var(--bion-color-line);
+            }
+            .sum {
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 10px;
+              font-size: var(--bion-font-size-sm);
+              color: var(--bion-color-mute);
+            }
+            .sum.tot {
+              margin: 16px 0 20px;
+              padding-top: 16px;
+              border-top: 1px solid var(--bion-color-line);
+              color: var(--bion-color-ink);
+              align-items: baseline;
+            }
+            .sum.tot .v {
+              font-family: var(--bion-font-display);
+              font-weight: 500;
+              font-size: var(--bion-font-size-xl);
+              font-variant-numeric: tabular-nums;
+            }
+            .checkout {
+              width: 100%;
+              background: var(--bion-color-ink);
+              color: var(--bion-color-on-ink);
+              border: none;
+              border-radius: var(--bion-radius-pill);
+              padding: 15px;
+              font-family: var(--bion-font-body);
+              font-size: var(--bion-font-size-base);
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 9px;
+              transition: var(--bion-motion-base) var(--bion-motion-ease);
+            }
+            .checkout:hover {
+              gap: 13px;
+            }
+            .empty {
+              flex: 1;
+              display: grid;
+              place-content: center;
+              justify-items: center;
+              gap: 16px;
+              text-align: center;
+              padding: 40px;
+              color: var(--bion-color-mute);
+            }
+            .empty .circ {
+              width: 64px;
+              height: 64px;
+              border-radius: 50%;
+              border: 1px solid var(--bion-color-line);
+              display: grid;
+              place-items: center;
+            }
+            .empty .circ svg {
+              width: 26px;
+              height: 26px;
+            }
+            .empty p {
+              font-family: var(--bion-font-display);
+              font-weight: 500;
+              font-size: var(--bion-font-size-md);
+              color: var(--bion-color-ink);
+            }
+          `,
+        ];
+        connectedCallback() {
+          super.connectedCallback();
+          this._k = (e) => {
+            if (e.key === "Escape" && this.open) this._emit("bion-close");
+          };
+          window.addEventListener("keydown", this._k);
+        }
+        disconnectedCallback() {
+          super.disconnectedCallback();
+          window.removeEventListener("keydown", this._k);
+        }
+        _emit(t, d) {
+          this.dispatchEvent(
+            new CustomEvent(t, { detail: d, bubbles: true, composed: true }),
+          );
+        }
+        _count() {
+          return this.items.reduce((s, i) => s + i.qty, 0);
+        }
+        render() {
+          return html` <div
+              class="scrim"
+              @click=${() => this._emit("bion-close")}
+            ></div>
+            <aside class="drawer" role="dialog" aria-label="Cart">
+              <div class="head">
+                <h2>Keranjang <span class="n">${this._count()} item</span></h2>
+                <button class="close" @click=${() => this._emit("bion-close")}>
+                  ${iconSVG("close", 18, 1.6)}
+                </button>
+              </div>
+              ${this.items.length === 0
+                ? html`<div class="empty">
+                    <span class="circ">${iconSVG("cart", 26, 1.4)}</span>
+                    <p>Keranjang masih kosong</p>
+                    <small>Tambahkan produk untuk mulai checkout</small>
+                  </div>`
+                : html` <div class="items">
+                      ${this.items.map(
+                        (it) =>
+                          html`<div class="row">
+                            <div class="thumb">
+                              <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1"
+                                .innerHTML=${icons[it.glyph ?? "box"]}
+                              ></svg>
+                            </div>
+                            <div class="info">
+                              <span class="nm">${it.name}</span>${it.brand
+                                ? html`<span class="br">${it.brand}</span>`
+                                : nothing}
+                              <div class="row2">
+                                <bion-quantity-stepper
+                                  .value=${it.qty}
+                                  min="0"
+                                  @bion-change=${(e) =>
+                                    this._emit("bion-quantity-change", {
+                                      id: it.id,
+                                      value: e.detail.value,
+                                    })}
+                                ></bion-quantity-stepper>
+                                <span class="lt">${it.lineTotal}</span>
+                              </div>
+                            </div>
+                          </div>`,
+                      )}
+                    </div>
+                    <div class="foot">
+                      <div class="sum">
+                        <span>Subtotal</span><span>${this.subtotal}</span>
+                      </div>
+                      <div class="sum">
+                        <span>Ongkir</span><span>${this.shipping}</span>
+                      </div>
+                      <div class="sum tot">
+                        <span>Total</span><span class="v">${this.total}</span>
+                      </div>
+                      <button
+                        class="checkout"
+                        @click=${() => this._emit("bion-checkout")}
+                      >
+                        Checkout ${iconSVG("arrowRight", 16, 1.8)}
+                      </button>
+                    </div>`}
+            </aside>`;
+        }
+      }
+      customElements.define("bion-cart-drawer", BionCartDrawer);
+
+      /* ════════════ DEMO WIRING ════════════ */
+      const rp = (n) => "Rp " + n.toLocaleString("id-ID");
+
+      /* tokens — read every --bion-* custom property straight from :root so
+         the gallery and the count can never drift from the real definitions */
+      function readRootTokens() {
+        const out = [];
+        for (const sheet of document.styleSheets) {
+          let rules;
+          try {
+            rules = sheet.cssRules;
+          } catch {
+            continue;
+          }
+          for (const rule of rules) {
+            if (rule.selectorText !== ":root" || !rule.style) continue;
+            for (const prop of rule.style) {
+              if (prop.startsWith("--bion-"))
+                out.push([prop, rule.style.getPropertyValue(prop).trim()]);
+            }
+          }
+        }
+        return out;
+      }
+      /* prefixes tested in order — more specific ones first */
+      const TOKEN_GROUPS = [
+        ["Color", "color-", true],
+        ["Radius", "radius-"],
+        ["Space", "space-"],
+        ["Font size", "font-size-"],
+        ["Font weight", "font-weight-"],
+        ["Font family", "font-"],
+        ["Line height", "line-height-"],
+        ["Letter spacing", "letter-spacing-"],
+        ["Motion", "motion-"],
+        ["Z-index", "z-index-"],
+      ];
+      function classifyToken(name) {
+        const k = name.replace("--bion-", "");
+        for (const [title, prefix, isColor] of TOKEN_GROUPS) {
+          if (k.startsWith(prefix))
+            return { title, leaf: k.slice(prefix.length), isColor: !!isColor };
+        }
+        return { title: "Other", leaf: k, isColor: false };
+      }
+      const tokens = readRootTokens();
+      const grouped = new Map(TOKEN_GROUPS.map(([t]) => [t, []]));
+      for (const [name, value] of tokens) {
+        const { title, leaf, isColor } = classifyToken(name);
+        if (!grouped.has(title)) grouped.set(title, []);
+        grouped.get(title).push({ leaf, value, isColor });
+      }
+      document.getElementById("swatches").innerHTML = [...grouped]
+        .filter(([, items]) => items.length)
+        .map(([title, items]) => {
+          const toks = items
+            .map(({ leaf, value, isColor }) =>
+              isColor
+                ? `<div class="tok"><div class="chip" style="background:${value}"></div><div class="name">${leaf}</div><div class="val">${value}</div></div>`
+                : `<div class="tok"><div class="chip meta">${value}</div><div class="name">${leaf}</div></div>`,
+            )
+            .join("");
+          return `<div class="tok-group">${title}</div><div class="swatch-row">${toks}</div>`;
+        })
+        .join("");
+      document.getElementById("tokCount").textContent = tokens.length;
+
+      /* icon canvas */
+      const iconNames = [
+        "cart",
+        "search",
+        "heart",
+        "plus",
+        "close",
+        "chevronRight",
+        "arrowRight",
+        "star",
+        "box",
+        "audio",
+        "watch",
+        "camera",
+        "speaker",
+      ];
+      const iconCanvas = document.getElementById("iconCanvas");
+      function renderIcons(size) {
+        iconCanvas.innerHTML = iconNames
+          .map(
+            (n) =>
+              `<bion-icon name="${n}" size="${size}" title="${n}"></bion-icon>`,
+          )
+          .join("");
+      }
+      renderIcons(24);
+      document.getElementById("iconSize").addEventListener("input", (e) => {
+        document.getElementById("iconSizeV").textContent = e.target.value;
+        renderIcons(+e.target.value);
+      });
+
+      /* chips */
+      const chipData = ["Semua", "Audio", "Kamera", "Wearable"];
+      let chipActive = "Semua";
+      const chipCanvas = document.getElementById("chipCanvas");
+      function renderChips() {
+        chipCanvas.style.gap = "24px";
+        chipCanvas.innerHTML = chipData
+          .map(
+            (c) =>
+              `<bion-chip value="${c}" ${c === chipActive ? "active" : ""}>${c}</bion-chip>`,
+          )
+          .join("");
+      }
+      renderChips();
+      chipCanvas.addEventListener("bion-select", (e) => {
+        chipActive = e.detail.value;
+        renderChips();
+        document.getElementById("chipLog").innerHTML =
+          `bion-select → <b>{ value: "${e.detail.value}" }</b>`;
+      });
+
+      /* rating control */
+      document.getElementById("rateV").addEventListener("input", (e) => {
+        document.getElementById("rateVV").textContent = e.target.value;
+        document
+          .querySelectorAll("#rating bion-rating")
+          .forEach((r) => (r.value = +e.target.value));
+      });
+
+      /* product cards */
+      const products = [
+        {
+          name: "Auro Headset",
+          brand: "Auro",
+          price: rp(349000),
+          oldPrice: rp(499000),
+          glyph: "audio",
+          tag: "30% off",
+          rating: 5,
+          reviews: "1.2rb",
+        },
+        {
+          name: "Tempo Watch",
+          brand: "Tempo",
+          price: rp(899000),
+          glyph: "watch",
+          tag: "Baru",
+          rating: 4,
+          reviews: "847",
+        },
+        {
+          name: "Lume Camera",
+          brand: "Lume",
+          price: rp(1250000),
+          glyph: "camera",
+          rating: 5,
+          reviews: "412",
+        },
+        {
+          name: "Nada Speaker",
+          brand: "Nada",
+          price: rp(459000),
+          glyph: "speaker",
+          rating: 4,
+          reviews: "658",
+        },
+      ];
+      const cardCanvas = document.getElementById("cardCanvas");
+      cardCanvas.innerHTML = products
+        .map(
+          (p) =>
+            `<bion-product-card name="${p.name}" brand="${p.brand}" price="${p.price}" ${p.oldPrice ? `old-price="${p.oldPrice}"` : ""} glyph="${p.glyph}" ${p.tag ? `tag="${p.tag}"` : ""} rating="${p.rating}" reviews="${p.reviews}"></bion-product-card>`,
+        )
+        .join("");
+      cardCanvas.addEventListener(
+        "bion-add",
+        (e) =>
+          (document.getElementById("cardLog").innerHTML =
+            `bion-add → <b>{ name: "${e.detail.name}" }</b> &nbsp;(a remote would re-emit cart:add-item)`),
+      );
+      cardCanvas.addEventListener(
+        "bion-favorite",
+        (e) =>
+          (document.getElementById("cardLog").innerHTML =
+            `bion-favorite → <b>{ favorite: ${e.detail.favorite} }</b>`),
+      );
+      cardCanvas.addEventListener(
+        "bion-select",
+        (e) =>
+          (document.getElementById("cardLog").innerHTML =
+            `bion-select → <b>{ name: "${e.detail.name}" }</b>`),
+      );
+
+      /* quantity stepper */
+      document
+        .getElementById("qty")
+        .addEventListener(
+          "bion-change",
+          (e) =>
+            (document.getElementById("qtyLog").innerHTML =
+              `bion-change → value: <b>${e.detail.value}</b>`),
+        );
+
+      /* cart drawer — a tiny "cart remote" holding state + formatting (NOT the DS) */
+      const drawer = document.createElement("bion-cart-drawer");
+      document.body.appendChild(drawer);
+      let cart = [
+        {
+          id: "p1",
+          name: "Auro Headset",
+          brand: "Auro",
+          glyph: "audio",
+          qty: 1,
+          price: 349000,
+        },
+        {
+          id: "p2",
+          name: "Tempo Watch",
+          brand: "Tempo",
+          glyph: "watch",
+          qty: 2,
+          price: 899000,
+        },
+      ];
+      function syncDrawer() {
+        drawer.items = cart.map((i) => ({
+          ...i,
+          lineTotal: rp(i.price * i.qty),
+        }));
+        const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+        drawer.subtotal = rp(total);
+        drawer.total = rp(total);
+      }
+      syncDrawer();
+      document.getElementById("openCart").addEventListener("click", () => {
+        drawer.open = true;
+        document.getElementById("cartLog").innerHTML = "— drawer open";
+      });
+      drawer.addEventListener("bion-close", () => {
+        drawer.open = false;
+        document.getElementById("cartLog").innerHTML =
+          "bion-close → <b>drawer closed</b>";
+      });
+      drawer.addEventListener("bion-quantity-change", (e) => {
+        const it = cart.find((c) => c.id === e.detail.id);
+        if (it) {
+          it.qty = e.detail.value;
+          cart = cart.filter((c) => c.qty > 0);
+          syncDrawer();
+        }
+        document.getElementById("cartLog").innerHTML =
+          `bion-quantity-change → <b>{ id:"${e.detail.id}", value:${e.detail.value} }</b> &nbsp;(remote recomputed totals)`;
+      });
+      drawer.addEventListener(
+        "bion-checkout",
+        () =>
+          (document.getElementById("cartLog").innerHTML =
+            "bion-checkout → <b>remote would navigate to checkout</b>"),
+      );
+
+      /* account badge */
+      document
+        .querySelectorAll("#account-badge bion-account-badge")
+        .forEach((b) =>
+          b.addEventListener(
+            "bion-select",
+            (e) =>
+              (document.getElementById("badgeLog").innerHTML =
+                `bion-select → <b>{ name: "${e.detail.name}" }</b>`),
+          ),
+        );
+
+      /* usage snippet tabs */
+      document.querySelectorAll("details.usage").forEach((d) => {
+        const react = d.dataset.react,
+          vue = d.dataset.vue,
+          htmlc = d.dataset.html;
+        d.innerHTML = `<summary>Usage</summary><div class="tabs"><button class="on" data-t="react">React</button><button data-t="vue">Vue</button><button data-t="html">HTML</button></div><pre></pre>`;
+        const pre = d.querySelector("pre");
+        const map = { react, vue, html: htmlc };
+        pre.textContent = react;
+        d.querySelectorAll(".tabs button").forEach((b) =>
+          b.addEventListener("click", (ev) => {
+            ev.preventDefault();
+            d.querySelectorAll(".tabs button").forEach((x) =>
+              x.classList.remove("on"),
+            );
+            b.classList.add("on");
+            pre.textContent = map[b.dataset.t];
+          }),
+        );
+      });
+    </script>
+  </body>
+</html>

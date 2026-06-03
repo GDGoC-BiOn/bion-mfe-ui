@@ -1,0 +1,20 @@
+{
+  "name": "@bion-mfe-ui/css",
+  "version": "0.1.0",
+  "description": "Class-based stylesheet for Bion MFE UI, consuming @bion-mfe-ui/tokens. Usable without any JS framework.",
+  "type": "module",
+  "exports": {
+    "./reset": "./dist/reset.css",
+    "./components": "./dist/components.css",
+    "./index.css": "./dist/index.css"
+  },
+  "files": ["dist"],
+  "sideEffects": ["*.css"],
+  "dependencies": {
+    "@bion-mfe-ui/tokens": "workspace:^"
+  },
+  "scripts": {
+    "build": "node scripts/bundle.mjs"
+  },
+  "publishConfig": { "access": "public" }
+}

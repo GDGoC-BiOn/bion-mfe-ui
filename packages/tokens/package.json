@@ -1,0 +1,30 @@
+{
+  "name": "@bion-mfe-ui/tokens",
+  "version": "0.1.0",
+  "description": "Design tokens (colors, type, spacing, radius) — source of truth for all Bion MFE UI. Framework-agnostic.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./css": "./dist/tokens.css",
+    "./scss": "./dist/_tokens.scss"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts && node scripts/generate.mjs",
+    "dev": "node scripts/generate.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
