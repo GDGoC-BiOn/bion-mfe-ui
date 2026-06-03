@@ -479,6 +479,56 @@
         color: var(--bion-color-mute);
       }
 
+      .install-grid {
+        display: grid;
+        gap: 8px;
+        margin-top: 4px;
+      }
+      .install-row {
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        align-items: center;
+        gap: 16px;
+        border: 1px solid var(--bion-color-line);
+        border-radius: var(--bion-radius-md);
+        background: var(--bion-color-paper);
+        padding: 12px 16px;
+      }
+      .install-row .lbl {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--bion-color-ink);
+      }
+      .install-row .cmd {
+        font-family: "JetBrains Mono";
+        font-size: 12.5px;
+        color: var(--bion-color-ink2);
+      }
+      .codeblock {
+        margin: 12px 0 0;
+        border: 1px solid var(--bion-color-line);
+        border-radius: var(--bion-radius-md);
+        background: var(--bion-color-paper);
+        padding: 14px 16px;
+        font-family: "JetBrains Mono";
+        font-size: 12px;
+        line-height: 1.65;
+        color: var(--bion-color-ink2);
+        overflow-x: auto;
+        white-space: pre;
+      }
+      h3.sub {
+        font-size: 14px;
+        margin: 26px 0 6px;
+        color: var(--bion-color-ink);
+      }
+      @media (max-width: 560px) {
+        .install-row {
+          grid-template-columns: 1fr;
+          gap: 6px;
+        }
+      }
+
       footer {
         padding: 40px 64px;
         color: var(--bion-color-mute);
@@ -517,6 +567,10 @@
         <div class="tagline">
           Framework-agnostic design system for the Bion micro-frontends.
         </div>
+        <div class="nav-group">Get started</div>
+        <nav>
+          <a href="#install">Installation</a>
+        </nav>
         <div class="nav-group">Foundation</div>
         <nav>
           <a href="#tokens">Tokens</a>
@@ -571,6 +625,72 @@
             </div>
           </div>
         </div>
+
+        <!-- INSTALLATION -->
+        <section class="comp" id="install">
+          <div class="comp-head">
+            <h2>Installation</h2>
+            <span class="tagchip">npm · pnpm · yarn</span>
+          </div>
+          <p class="comp-desc">
+            All packages are ESM-only, published under the
+            <code>@bion-mfe-ui</code> scope. Install the one that matches your
+            setup; the React and Vue adapters pull <code>core</code>,
+            <code>tokens</code>, and <code>icons</code> in automatically.
+          </p>
+
+          <div class="install-grid">
+            <div class="install-row">
+              <span class="lbl">React</span>
+              <code class="cmd">npm install @bion-mfe-ui/react</code>
+            </div>
+            <div class="install-row">
+              <span class="lbl">Vue</span>
+              <code class="cmd">npm install @bion-mfe-ui/vue</code>
+            </div>
+            <div class="install-row">
+              <span class="lbl">Plain HTML / any framework</span>
+              <code class="cmd">npm install @bion-mfe-ui/core</code>
+            </div>
+            <div class="install-row">
+              <span class="lbl">CSS only (no JS framework)</span>
+              <code class="cmd">npm install @bion-mfe-ui/css</code>
+            </div>
+            <div class="install-row">
+              <span class="lbl">Design tokens only</span>
+              <code class="cmd">npm install @bion-mfe-ui/tokens</code>
+            </div>
+          </div>
+
+          <div class="comp-events">
+            Peer deps you provide: <code>react</code> +
+            <code>react-dom</code> ≥18 · <code>vue</code> ≥3.4
+          </div>
+
+          <h3 class="sub">Load tokens once (required)</h3>
+          <p class="comp-desc">
+            Components read CSS variables from tokens, including inside their
+            shadow DOM, so import the stylesheet once at your app root.
+          </p>
+          <pre class="codeblock">
+@import "@bion-mfe-ui/css/index.css"; /* tokens + reset + classes */
+/* or only the variables: */
+@import "@bion-mfe-ui/tokens/css";</pre
+          >
+
+          <h3 class="sub">Via CDN (no install)</h3>
+          <p class="comp-desc">
+            For quick prototyping, load straight from a CDN; esm.sh resolves Lit
+            for you.
+          </p>
+          <pre class="codeblock">
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@bion-mfe-ui/css/dist/index.css" /&gt;
+&lt;script type="module"&gt;
+  import "https://esm.sh/@bion-mfe-ui/core/product-card";
+&lt;/script&gt;
+&lt;bion-product-card name="Auro Headset" price="Rp 349.000"&gt;&lt;/bion-product-card&gt;</pre
+          >
+        </section>
 
         <!-- TOKENS -->
         <section class="comp" id="tokens">
