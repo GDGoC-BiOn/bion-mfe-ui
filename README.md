@@ -1,5 +1,7 @@
 # @bion-mfe-ui
 
+**Live demo:** https://gdgoc-bion.github.io/bion-mfe-ui/
+
 Framework-agnostic design system for the Bion micro-frontends. Built so the
 shell, product-catalog, and cart remotes, which deploy independently and may
 even be written in different frameworks, share one visual language without
