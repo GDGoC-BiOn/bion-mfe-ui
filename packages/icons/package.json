@@ -1,7 +1,7 @@
 {
   "name": "@bion-mfe-ui/icons",
   "version": "0.1.0",
-  "description": "Raw SVG icon set for Bion MFE UI. Framework-agnostic — exported as strings.",
+  "description": "Raw SVG icon set for Bion MFE UI. Framework-agnostic, exported as strings.",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",

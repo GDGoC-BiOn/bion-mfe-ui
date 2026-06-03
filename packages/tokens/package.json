@@ -1,7 +1,7 @@
 {
   "name": "@bion-mfe-ui/tokens",
   "version": "0.1.0",
-  "description": "Design tokens (colors, type, spacing, radius) — source of truth for all Bion MFE UI. Framework-agnostic.",
+  "description": "Design tokens (colors, type, spacing, radius). Source of truth for all Bion MFE UI. Framework-agnostic.",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",

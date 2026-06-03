@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@bion-mfe-ui — components</title>
+    <title>@bion-mfe-ui · components</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -547,7 +547,7 @@
           <div class="eyebrow">Component preview</div>
           <h1>One system,<br />three frameworks.</h1>
           <p>
-            Every component below is a real Web Component built with Lit — the
+            Every component below is a real Web Component built with Lit, the
             same source that ships in <code>@bion-mfe-ui/core</code>. React and
             Vue consume them through thin adapters with identical props and
             events. Interact with the controls to see them live.
@@ -579,7 +579,7 @@
             <span class="tagchip">@bion-mfe-ui/tokens</span>
           </div>
           <p class="comp-desc">
-            The single source of truth. A pure monochrome scale — color encodes
+            The single source of truth. A pure monochrome scale. Color encodes
             elevation and text hierarchy only; ink itself is the accent. Every
             value is a CSS variable consumed by all packages and inside shadow
             DOM.
@@ -625,7 +625,7 @@
           </div>
           <p class="comp-desc">
             Three variants: solid, outline, and icon-only. Optional trailing
-            icon. Fires native <code>click</code> — no custom event needed.
+            icon. Fires native <code>click</code>, no custom event needed.
           </p>
           <div class="canvas">
             <bion-button variant="solid" icon="arrowRight"
@@ -667,12 +667,12 @@ import { Button } from &apos;@bion-mfe-ui/vue&apos;;
           </div>
           <p class="comp-desc">
             Underline-on-active filter chip. The parent owns which chip is
-            active — the chip only reports intent, so a remote drives filtering
+            active; the chip only reports intent, so a remote drives filtering
             (not the design system).
           </p>
           <div class="comp-events">Emits <b>bion-select</b> { value }</div>
           <div class="canvas" id="chipCanvas"></div>
-          <div class="log" id="chipLog">— interact to see events</div>
+          <div class="log" id="chipLog">interact to see events</div>
         </section>
 
         <!-- RATING -->
@@ -710,15 +710,15 @@ import { Button } from &apos;@bion-mfe-ui/vue&apos;;
           </div>
           <p class="comp-desc">
             The catalog's workhorse. Owns only presentation + the favourite
-            toggle. It never knows about a cart or currency — it emits events
-            and lets the remote decide. Hover to reveal the add and favourite
+            toggle. It never knows about a cart or currency; it emits events and
+            lets the remote decide. Hover to reveal the add and favourite
             buttons.
           </p>
           <div class="comp-events">
             Emits <b>bion-add</b> · <b>bion-favorite</b> · <b>bion-select</b>
           </div>
           <div class="canvas grid4" id="cardCanvas"></div>
-          <div class="log" id="cardLog">— hover a card, then click + or ♥</div>
+          <div class="log" id="cardLog">hover a card, then click + or ♥</div>
           <details
             class="usage"
             data-react='import { ProductCard } from &apos;@bion-mfe-ui/react&apos;;
@@ -764,7 +764,7 @@ import { Button } from &apos;@bion-mfe-ui/vue&apos;;
                   color: var(--bion-color-mute);
                 "
               >
-                Banner 1 — audio
+                Banner 1 · audio
               </div>
               <div
                 class="slide"
@@ -775,7 +775,7 @@ import { Button } from &apos;@bion-mfe-ui/vue&apos;;
                   color: var(--bion-color-mute);
                 "
               >
-                Banner 2 — wearable
+                Banner 2 · wearable
               </div>
               <div
                 class="slide"
@@ -786,7 +786,7 @@ import { Button } from &apos;@bion-mfe-ui/vue&apos;;
                   color: var(--bion-color-mute);
                 "
               >
-                Banner 3 — camera
+                Banner 3 · camera
               </div>
             </bion-carousel>
           </div>
@@ -811,7 +811,7 @@ import { Button } from &apos;@bion-mfe-ui/vue&apos;;
               id="qty"
             ></bion-quantity-stepper>
           </div>
-          <div class="log" id="qtyLog">— value: 1</div>
+          <div class="log" id="qtyLog">value: 1</div>
         </section>
 
         <!-- CART DRAWER -->
@@ -822,7 +822,7 @@ import { Button } from &apos;@bion-mfe-ui/vue&apos;;
           </div>
           <p class="comp-desc">
             Slide-over drawer. Receives line items and
-            <em>pre-formatted</em> subtotal/total strings — it never does
+            <em>pre-formatted</em> subtotal/total strings; it never does
             currency math. Keeps the source of truth in the cart remote, passes
             strings in, reacts to events out.
           </p>
@@ -838,7 +838,7 @@ import { Button } from &apos;@bion-mfe-ui/vue&apos;;
               >item qty changes update the totals live</span
             >
           </div>
-          <div class="log" id="cartLog">— drawer closed</div>
+          <div class="log" id="cartLog">drawer closed</div>
         </section>
 
         <!-- ACCOUNT BADGE -->
@@ -848,7 +848,7 @@ import { Button } from &apos;@bion-mfe-ui/vue&apos;;
             <span class="tagchip">&lt;bion-account-badge&gt;</span>
           </div>
           <p class="comp-desc">
-            Shell-owned identity chip. Purely presentational — shows who is
+            Shell-owned identity chip. Purely presentational; shows who is
             signed in. It does no auth; the shell passes the resolved name.
             Initials derive automatically if omitted.
           </p>
@@ -860,11 +860,11 @@ import { Button } from &apos;@bion-mfe-ui/vue&apos;;
               initials="OT"
             ></bion-account-badge>
           </div>
-          <div class="log" id="badgeLog">— click a badge</div>
+          <div class="log" id="badgeLog">click a badge</div>
         </section>
 
         <footer>
-          <span>@bion-mfe-ui — component preview</span>
+          <span>@bion-mfe-ui · component preview</span>
           <span>Web Components · Lit · monochrome</span>
         </footer>
       </main>
@@ -2097,7 +2097,7 @@ import { Button } from &apos;@bion-mfe-ui/vue&apos;;
       /* ════════════ DEMO WIRING ════════════ */
       const rp = (n) => "Rp " + n.toLocaleString("id-ID");
 
-      /* tokens — read every --bion-* custom property straight from :root so
+      /* tokens: read every --bion-* custom property straight from :root so
          the gallery and the count can never drift from the real definitions */
       function readRootTokens() {
         const out = [];
@@ -2118,7 +2118,7 @@ import { Button } from &apos;@bion-mfe-ui/vue&apos;;
         }
         return out;
       }
-      /* prefixes tested in order — more specific ones first.
+      /* prefixes tested in order, more specific ones first.
          `kind` decides how the sample actually demonstrates the token. */
       const TOKEN_GROUPS = [
         ["Color", "color-", "color"],
@@ -2321,7 +2321,7 @@ import { Button } from &apos;@bion-mfe-ui/vue&apos;;
               `bion-change → value: <b>${e.detail.value}</b>`),
         );
 
-      /* cart drawer — a tiny "cart remote" holding state + formatting (NOT the DS) */
+      /* cart drawer: a tiny "cart remote" holding state + formatting (NOT the DS) */
       const drawer = document.createElement("bion-cart-drawer");
       document.body.appendChild(drawer);
       let cart = [
@@ -2354,7 +2354,7 @@ import { Button } from &apos;@bion-mfe-ui/vue&apos;;
       syncDrawer();
       document.getElementById("openCart").addEventListener("click", () => {
         drawer.open = true;
-        document.getElementById("cartLog").innerHTML = "— drawer open";
+        document.getElementById("cartLog").innerHTML = "drawer open";
       });
       drawer.addEventListener("bion-close", () => {
         drawer.open = false;
