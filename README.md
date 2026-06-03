@@ -25,14 +25,14 @@ tokens ─┬─► css ──────────────► (any frame
 
 ## Packages
 
-| Package               | Agnostic? | What it is                                                                          |
-| --------------------- | --------- | ----------------------------------------------------------------------------------- |
-| `@bion-mfe-ui/tokens` | yes       | Source of truth for color, type, spacing, radius, motion. Emits CSS vars, JS, SCSS. |
-| `@bion-mfe-ui/icons`  | yes       | Raw SVG icon strings. No framework.                                                 |
-| `@bion-mfe-ui/css`    | yes       | Class-based stylesheet on top of tokens. Use without any JS framework.              |
-| `@bion-mfe-ui/core`   | yes       | The actual components, as Web Components (Lit). `<bion-product-card>` etc.          |
-| `@bion-mfe-ui/react`  | React     | Thin wrappers: bridge props + custom events.                                        |
-| `@bion-mfe-ui/vue`    | Vue       | Thin wrappers: typed props + emits.                                                 |
+| Package                                                                    | npm                                                                                                           | Agnostic? | What it is                                                                          |
+| -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | --------- | ----------------------------------------------------------------------------------- |
+| [`@bion-mfe-ui/tokens`](https://www.npmjs.com/package/@bion-mfe-ui/tokens) | [![npm](https://img.shields.io/npm/v/@bion-mfe-ui/tokens)](https://www.npmjs.com/package/@bion-mfe-ui/tokens) | yes       | Source of truth for color, type, spacing, radius, motion. Emits CSS vars, JS, SCSS. |
+| [`@bion-mfe-ui/icons`](https://www.npmjs.com/package/@bion-mfe-ui/icons)   | [![npm](https://img.shields.io/npm/v/@bion-mfe-ui/icons)](https://www.npmjs.com/package/@bion-mfe-ui/icons)   | yes       | Raw SVG icon strings. No framework.                                                 |
+| [`@bion-mfe-ui/css`](https://www.npmjs.com/package/@bion-mfe-ui/css)       | [![npm](https://img.shields.io/npm/v/@bion-mfe-ui/css)](https://www.npmjs.com/package/@bion-mfe-ui/css)       | yes       | Class-based stylesheet on top of tokens. Use without any JS framework.              |
+| [`@bion-mfe-ui/core`](https://www.npmjs.com/package/@bion-mfe-ui/core)     | [![npm](https://img.shields.io/npm/v/@bion-mfe-ui/core)](https://www.npmjs.com/package/@bion-mfe-ui/core)     | yes       | The actual components, as Web Components (Lit). `<bion-product-card>` etc.          |
+| [`@bion-mfe-ui/react`](https://www.npmjs.com/package/@bion-mfe-ui/react)   | [![npm](https://img.shields.io/npm/v/@bion-mfe-ui/react)](https://www.npmjs.com/package/@bion-mfe-ui/react)   | React     | Thin wrappers: bridge props + custom events.                                        |
+| [`@bion-mfe-ui/vue`](https://www.npmjs.com/package/@bion-mfe-ui/vue)       | [![npm](https://img.shields.io/npm/v/@bion-mfe-ui/vue)](https://www.npmjs.com/package/@bion-mfe-ui/vue)       | Vue       | Thin wrappers: typed props + emits.                                                 |
 
 ## Components (all implemented)
 
