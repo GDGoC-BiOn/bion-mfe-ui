@@ -1,31 +1,52 @@
-import { css, unsafeCSS } from "lit";
-import { tokens } from "@bion-mfe-ui/tokens";
+import { css } from "lit";
 
 /**
- * Web Components use Shadow DOM, which does NOT inherit page CSS, but it DOES
- * inherit CSS custom properties from the document `:root`. So if the host page
- * has loaded `@bion-mfe-ui/tokens/css`, every --bion-* var is available inside
- * the shadow root for free.
+ * Idempotent custom-element registration.
  *
- * As a safety net (e.g. a remote rendered before tokens.css loads), we also
- * inline the token values as fallbacks so components never render unstyled.
+ * @bion-mfe-ui is a design system meant to be shared across micro-frontends,
+ * where more than one copy of @bion-mfe-ui/core can legitimately load in the
+ * same document (e.g. a React remote and a Vue remote that each pull core).
+ * Native `customElements.define` throws `NotSupportedError: "bion-…" has already
+ * been used` on the second registration of a tag, which crashes the page. We
+ * make it a no-op when the tag is already defined.
+ *
+ * This lives in `styles.ts` (rather than its own module) because every component
+ * imports `hostTokens` from here, so the patch is guaranteed to run before any
+ * `@customElement` decorator — and a separate side-effect-only module would be
+ * tree-shaken by the build. The guard flag lives on the one shared
+ * `window.customElements`, so it is installed once across all copies.
  */
-const kebab = (s: string) =>
-  s.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+if (typeof customElements !== "undefined") {
+  const registry = customElements as CustomElementRegistry & {
+    __bionDefineGuard?: boolean;
+  };
+  if (!registry.__bionDefineGuard) {
+    const define = registry.define.bind(registry);
+    registry.define = (name, constructor, options) => {
+      if (!registry.get(name)) define(name, constructor, options);
+    };
+    registry.__bionDefineGuard = true;
+  }
+}
 
-const fallbacks = Object.entries(tokens)
-  .flatMap(([group, entries]) =>
-    Object.entries(entries).map(
-      ([key, value]) =>
-        `--bion-${kebab(group)}-${kebab(key)}: var(--bion-${kebab(group)}-${kebab(key)}, ${value});`,
-    ),
-  )
-  .join("\n");
-
-/** Apply to every component's `static styles` so tokens resolve inside shadow DOM. */
+/**
+ * Web Components use Shadow DOM, which does NOT inherit page CSS — but it DOES
+ * inherit CSS custom properties from the document `:root`, and that inheritance
+ * crosses every shadow boundary at any nesting depth. So once the host page
+ * loads `@bion-mfe-ui/tokens/css`, every --bion-* var is available inside every
+ * component's shadow root for free.
+ *
+ * We deliberately do NOT re-declare the tokens on `:host` as a fallback. A
+ * `:host { --x: var(--x, default) }` "safety net" is self-referential, which
+ * Chromium resolves to the guaranteed-invalid (empty) value — wiping out the
+ * inherited tokens inside the shadow DOM (transparent backgrounds, dead
+ * transitions). Plain `:root` inheritance is the correct, working mechanism;
+ * load `@bion-mfe-ui/tokens/css` (or `@bion-mfe-ui/css/index.css`) once at the
+ * app root. If a per-property default is ever needed, put the fallback at the
+ * point of use, e.g. `background: var(--bion-color-bg, #fff)`.
+ */
 export const hostTokens = css`
   :host {
-    ${unsafeCSS(fallbacks)}
     box-sizing: border-box;
   }
   *,
